@@ -1,0 +1,15 @@
+# root=true は、このファイルが設定のルートであることを示し、
+# 親ディレクトリの .editorconfig ファイルを探すのを止めさせます。
+root = true
+
+# すべてのファイルに適用される一般的な設定
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C# ファイルに適用される設定
+[*.cs]
+indent_style = space
+indent_size = 4
