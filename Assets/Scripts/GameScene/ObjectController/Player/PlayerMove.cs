@@ -44,8 +44,12 @@ public class PlayerMove : MonoBehaviour
 
     Vector2 myVelocity = new();
 
-    readonly PlayerInput input = new();
+    PlayerInput input;
 
+    void Start()
+    {
+        input = GetComponent<PlayerInput>();
+    }
 
     // プレイヤーの座標に関する処理をまとめた
     public void MoveUpdate()

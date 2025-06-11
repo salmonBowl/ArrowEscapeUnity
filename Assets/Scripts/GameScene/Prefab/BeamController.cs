@@ -35,8 +35,8 @@ public class BeamController : MonoBehaviour
         }
         else
         {
-            Stage stageinfo = GameObject.Find("background").GetComponent<Stage>();
-            stageWidth = stageinfo.Width;
+            Background background = bg.GetComponent<Background>();
+            stageWidth = background.Width;
         }
         localTime = 0;
         mycollider.enabled = false;

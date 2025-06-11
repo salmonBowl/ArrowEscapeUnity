@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     float swordCoolTime;
 
     float invincible_timeCount = 0;
-    float player_colorAlpha = 1;
+    public float player_colorAlpha = 1;
 
     SpriteRenderer playerSpriteRenderer;
 
