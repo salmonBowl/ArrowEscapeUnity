@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 public class TextTypingDisp : IUpdatable
 {
+    public bool IsPlayFinished { get; private set; } = false;
+
     private readonly Text textbox;
     private readonly string message;
 
     private readonly int charsPerFrame;
     private int currentIndex;
     private int frameCounter;
-
-    private bool isPlayFinished = false;
 
     public TextTypingDisp(Text textbox, string message)
     {
@@ -33,7 +33,7 @@ public class TextTypingDisp : IUpdatable
 
     public void Update()
     {
-        if (isPlayFinished) return;
+        if (IsPlayFinished) return;
 
         if (IsFrameFilled())
         {
@@ -57,6 +57,6 @@ public class TextTypingDisp : IUpdatable
         currentIndex++; // currentIndexは初期値が0のため後ろに書いています
 
         textbox.text = slicedMessage;
-        isPlayFinished = slicedMessage == message;
+        IsPlayFinished = slicedMessage == message;
     }
 }

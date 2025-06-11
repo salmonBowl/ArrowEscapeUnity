@@ -12,9 +12,17 @@ public class ThankYouForPlaying : MonoBehaviour
     void OnEnable() => EventManager.Instance().OnGameCredit += TypingTextPlay;
     void OnDisable() => EventManager.Instance().OnGameCredit -= TypingTextPlay;
 
-    TextTypingDisp textTypingDisp;
+    private TextTypingDisp textTypingDisp;
     void TypingTextPlay()
     {
         textTypingDisp = new TextTypingDisp(textbox, message, textDispSpeed);
+    }
+    void Update()
+    {
+        textTypingDisp?.Update();
+        if (textTypingDisp?.IsPlayFinished == true)
+        {
+            textTypingDisp = null;
+        }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-public class EventManager
+public class EventManager : SingletonBase<EventManager>
 {
     public enum Status
     {
