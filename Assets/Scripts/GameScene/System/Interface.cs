@@ -1,5 +1,0 @@
-
-interface IUpdatable
-{
-    void Update();
-}
