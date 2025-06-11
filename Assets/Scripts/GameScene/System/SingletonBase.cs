@@ -15,13 +15,5 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : class, new()
         return instance;
     }
 
-    private static T instance;
-
-    protected SingletonBase()
-    {
-        if (instance != null)
-        {
-            Destroy(this);
-        }
-    }
+    private static T instance = new();
 }
