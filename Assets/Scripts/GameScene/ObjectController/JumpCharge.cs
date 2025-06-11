@@ -20,7 +20,7 @@ public class JumpCharge : MonoBehaviour
         SetFillAmount(Value);
         //jumpChargeに合わせて黄色フィルターの大きさを変える
         float player_colorAlpha = player.color.a;
-        GetComponent<SpriteRenderer>().color = Value != 0 ? new Color(1, 1, 1 - (0.4f * Value), player_colorAlpha)
+        player.color = Value != 0 ? new Color(1, 1, 1 - (0.4f * Value), player_colorAlpha)
             : new Color(1, 1, 1, player_colorAlpha);
     }
     void SetFillAmount(float value)

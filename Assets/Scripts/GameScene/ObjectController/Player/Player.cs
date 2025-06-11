@@ -18,18 +18,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-    [Header("他スクリプトからの情報取得用")]
-    [SerializeField] Background stage;
     [SerializeField] PlayerHitpoint playerhp;
-    [SerializeField] JumpCharge jumpcharge;
-    [Space(20)]
-    [SerializeField] float playerWidth;
-    [SerializeField] float adhesCorrect_y;
-    [SerializeField] SpriteRenderer particle_illum;
-    [SerializeField] float speed_x;
-    [SerializeField] float ratio_airmove;
-    [SerializeField] float jumpPower;
-    [SerializeField] float jumpChargeSpeed;
     [Space(20)]
     [SerializeField] GameObject sword;
     [SerializeField] float swordCircleCol_radius;
@@ -40,12 +29,6 @@ public class Player : MonoBehaviour
     [SerializeField] float invincibleTime;
     [SerializeField] float blinking_alpha;
 
-    readonly float stageWidth;
-    readonly float groundLevel;
-    readonly Vector2 gravityForce;
-
-    Vector2 myVelocity;
-
     float swordCoolTime;
 
     float invincible_timeCount = 0;
@@ -55,15 +38,7 @@ public class Player : MonoBehaviour
 
     public static event Action OnAttacked;
 
-    readonly PlayerInput input = new();
     readonly PlayerMove mover = new();
-
-    Player()
-    {
-        stageWidth = stage.Width;
-        groundLevel = stage.GroundLevel;
-        gravityForce = stage.GravityForce;
-    }
 
     void Start()
     {
@@ -75,21 +50,11 @@ public class Player : MonoBehaviour
         UpdateManager manager = UpdateManager.Instance();
         manager.OnUpdate += MyUpdate;
     }
+
     void MyUpdate()
     {
-        // プレイヤーの座標に関する処理
-        Update_PlayerMove();
-
-        // パーティクルを減衰
-        float illumdecrease = 0.05f;
-        Color pcolor = particle_illum.color;
-        particle_illum.color -= new Color(0, 0, 0, illumdecrease + Mathf.Min(0, pcolor.a - illumdecrease));
-
-        // jumpChargeに合わせてPlayerの色を黄色に
-        playerSpriteRenderer.color = jumpcharge.Value != 0 ? new Color(1, 1, 1 - (0.6f * jumpcharge.Value), player_colorAlpha)
-            : new Color(1, 1, 1, player_colorAlpha);
-        //jumpcharge.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0, 0.7f * player_colorAlpha);
-
+        // プレイヤーの移動に関する処理
+        mover.MoveUpdate();
 
         // 攻撃関係の処理
         swordCoolTime = Mathf.Max(0, swordCoolTime - Time.deltaTime);
@@ -109,99 +74,6 @@ public class Player : MonoBehaviour
         {
             StopAllCoroutines();
             player_colorAlpha = 1;
-        }
-    }
-
-    // プレイヤーの座標に関する処理をまとめた
-    void Update_PlayerMove()
-    {
-        input.ReadInput();
-        float inputX = input.X;
-        bool jumpPressed = input.JumpPressed;
-
-        // 更新前と更新後のPlayerの座標
-        Vector2 myPosition = transform.position;
-        Vector2 update_position = myPosition;
-
-        // velocityの更新
-        if (Grounded(myPosition))
-        {
-            // 地上では入力がそのまま移動
-            myVelocity.x = inputX * speed_x;
-            myVelocity.y = 0;
-
-            // ジャンプに関する処理
-            Jump(jumpPressed, true);
-        }
-        else
-        {
-            /*
-            // 空中では加速度的な移動
-            velocity.x = speed_x * Mathf.Clamp(velocity.x + (input_x * 0.01f), -1, 1);
-            */
-            // 空中でも等速的な移動
-            myVelocity.x = inputX * speed_x;
-
-            myVelocity += gravityForce;
-
-            // 2段ジャンプに関する処理
-            Jump(jumpPressed, false);
-        }
-
-        // Playerの移動処理
-
-        update_position += myVelocity;
-        // 位置補正
-        // 画面外に行くならxを補正
-        float moverange_half = (stageWidth - playerWidth) / 2;
-        update_position.x = Mathf.Clamp(update_position.x, -moverange_half, moverange_half);
-        // 地面にめり込むならyを補正
-        if (Grounded(update_position))
-        {
-            update_position.y = groundLevel + adhesCorrect_y;
-        }
-        transform.position = update_position;
-    }
-
-    /*
-        Jump(キー入力、地面に接地しているか)
-            ジャンプをする関数ではなくUpdateの中で動く、ジャンプに関する色々な処理
-            grondedがfalseだと2段ジャンプの挙動になります
-     */
-    void Jump(bool jumpPressed, bool grounded)
-    {
-        // jumpCharge
-        if (grounded)
-        {
-            float old_jumpCharge = jumpcharge.Value;
-            jumpcharge.Value = Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1);
-
-            // チャージが完了したらエフェクトを出す
-            if (old_jumpCharge < 1 && jumpcharge.Value == 1)
-            {
-                particle_illum.color = new Color(1, 1, 1, 1);
-            }
-        }
-
-        // ↑が押された時
-        if (jumpPressed)
-        {
-            // 通常のジャンプ処理
-            if (grounded)
-            {
-                // ジャンプによりjumpChargeを最大0.5だけ消費
-
-                myVelocity += Mathf.Min(jumpcharge.Value, 0.5f) * jumpPower * Vector2.up;
-                jumpcharge.Value -= Mathf.Min(jumpcharge.Value, 0.5f);
-            }
-            else // 2段ジャンプ
-            {
-                if (0.4f < jumpcharge.Value)
-                {
-                    myVelocity = 0.5f * jumpPower * Vector2.up;
-                    jumpcharge.Value = 0;
-                }
-            }
         }
     }
 
@@ -244,17 +116,6 @@ public class Player : MonoBehaviour
         float distance = Mathf.Sqrt(dif.x * dif.x + dif.y * dif.y);
 
         return distance < radius_player + radius_sword;
-    }
-
-    // 地面に接地しているかを返す関数
-    bool Grounded(Vector2 myPosition)
-    {
-        // Playerと地面の高さの差
-        float dif = myPosition.y - groundLevel;
-
-        // Playerが地面の高さ以下ならfalseを返す
-        float adjust = 0.1f;
-        return dif - adhesCorrect_y < adjust;
     }
 
     // 被弾
