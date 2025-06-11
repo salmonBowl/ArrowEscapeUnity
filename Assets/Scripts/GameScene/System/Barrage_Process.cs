@@ -29,11 +29,10 @@ public class Barrage_Process : ArrowGenerator
 
         stageWidth = stage.Width;
     }
+    void OnEnable() => UpdateManager.Instance().OnUpdateWhileGame += UpdateWhileGame;
 
-    void Update()
+    void UpdateWhileGame()
     {
-        if (stage.IsClear == false && stage.IsPerfectClear == false)
-        {
             // waitTime[]をカウントダウン
             waitTime = waitTime.Select(x => Mathf.Max(0, x - Time.deltaTime))
                                .ToList();
@@ -62,7 +61,6 @@ public class Barrage_Process : ArrowGenerator
                 // 普通のArrow
                 SingleArrow();
             }
-        }
     }
 
     /*

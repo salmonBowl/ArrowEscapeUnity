@@ -67,7 +67,12 @@ public class Player : MonoBehaviour
         swordCoolTime = attackInterval;
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
-    void Update()
+    void OnEnable()
+    {
+        UpdateManager manager = UpdateManager.Instance();
+        manager.OnUpdate += MyUpdate;
+    }
+    void MyUpdate()
     {
         // パーティクルを減衰
         float illumdecrease = 0.05f;
@@ -216,14 +221,14 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (stage.IsStart)
+            if (GamePhase.Instance().IsTitle)
             {
-                OnAttacked?.Invoke();
+                EventManager.Instance().Event("GameStart");
+                sword.GetComponent<Sigil>().Disp();
             }
             else
             {
-                stage.GameStart();
-                sword.GetComponent<Sigil>().Disp();
+                OnAttacked?.Invoke();
             }
 
             sword.SetActive(false);

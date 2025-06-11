@@ -6,7 +6,7 @@ public class PlayerHitpoint : MonoBehaviour
 {
     [HideInInspector] public float HP = 1.0f;
     [SerializeField] Stage stage;
-    [SerializeField] BossHitpoint bosshp;
+    [SerializeField] BossHealthPoint bosshp;
     [SerializeField] RetryGame retrypanel;
     [Space(20)]
     [SerializeField] Slider hpGauge;
@@ -20,12 +20,12 @@ public class PlayerHitpoint : MonoBehaviour
         hpGauge.value = (hpGauge.value * gaugeSmoothness) + (HP * (1 - gaugeSmoothness));
 
         // リトライ時にダメージを受けないように
-        if (bosshp.HP == 1)
+        if (bosshp.HealthPoint == 1)
         {
             HP = 1;
         }
         // PerfectClear後最初に戻る時にもダメージを受けないように
-        if (stage.IsPerfectClear && !stage.IsClear)
+        if (GamePhase.Instance().IsGameCredit)
         {
             HP = 1;
         }
@@ -44,22 +44,31 @@ public class PlayerHitpoint : MonoBehaviour
         if (HP == 0)
         {
             Debug.Log("リトライしました");
-            StartCoroutine(ResetGame(stage.IsPerfectClear));
+            StartCoroutine(WaitReset());
         }
+    }
 
-        // ゲームのリセット
-        IEnumerator ResetGame(bool endgame)
+    IEnumerator WaitReset()
+    {
+        yield return new WaitForSeconds(0.08f);
+
+        EventManager.Instance().Event("Retry");
+        ResetGame();
+
+        StopAllCoroutines();
+    }
+    // ゲームのリセット
+    void ResetGame()
+    {
+        yield return new WaitForSeconds(0.08f);
+        if (GamePhase.Instance().IsGameCredit == false)
         {
-            yield return new WaitForSeconds(0.08f);
-            if (!endgame)
-            {
-                bosshp.HP = 1;
-            }
-            HP = 1;
-            stage.Retry();
-            retrypanel.panelalpha = retrypanel.panelalpha_max;
-
-            StopAllCoroutines();
+            bosshp.HealthPoint = 1;
         }
+        HP = 1;
+        EventManager.Instance().Event("Retry");
+        retrypanel.panelalpha = retrypanel.panelalpha_max;
+
+        StopAllCoroutines();
     }
 }

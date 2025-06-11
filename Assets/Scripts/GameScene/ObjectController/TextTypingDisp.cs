@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextTypingDisp : IUpdatable
+public class TextTypingDisp
 {
     public bool IsPlayFinished { get; private set; } = false;
 

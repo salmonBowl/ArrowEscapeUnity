@@ -14,11 +14,8 @@ public interface IBossHealthStatus
     float HealthPoint { get; }
 }
 
-public class BossHealthpoint : MonoBehaviour, IBossHealthStatus
+public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
 {
-    [SerializeField]
-    private Stage stage;
-
     [Space(20)]
 
     [SerializeField]
@@ -41,19 +38,18 @@ public class BossHealthpoint : MonoBehaviour, IBossHealthStatus
 
         Player.OnAttacked += Attack;
     }
+    void OnEnable() => UpdateManager.Instance().OnUpdateIfNotTitle += UpdateIfNotTitle;
 
-    void Update()
+    void UpdateIfNotTitle()
     {
-        if (stage.IsStart)
-        {
-            // HPゲージの描画
-            gauge_fill.fillAmount = CalFillAmount(gauge_fill.fillAmount, hp);
+        // HPゲージの描画
+        gauge_fill.fillAmount = CalculateFillAmount(gauge_fill.fillAmount, hp);
 
-            // 開始時に背景を表示
-            gauge_backGround.fillAmount = CalFillAmount(gauge_backGround.fillAmount, 1);
-        }
+        // 開始時に背景を表示
+        gauge_backGround.fillAmount = CalculateFillAmount(gauge_backGround.fillAmount, 1);
     }
-    float CalFillAmount(float currentAmount, float nextAmount)
+
+    float CalculateFillAmount(float currentAmount, float nextAmount)
     {
         float smoothness = 0.9f; // 0.0f～1.0f
 
@@ -67,7 +63,7 @@ public class BossHealthpoint : MonoBehaviour, IBossHealthStatus
 
         if (hp == 0)
         {
-            stage.Clear();
+            EventManager.Instance().Event("GameClear");
         }
     }
     void DecreaseHP(float damage)

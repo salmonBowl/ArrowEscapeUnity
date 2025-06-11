@@ -10,7 +10,6 @@ public class ThankYouForPlaying : MonoBehaviour
     [SerializeField] int textDispSpeed;
 
     void OnEnable() => EventManager.Instance().OnGameCredit += TypingTextPlay;
-    void OnDisable() => EventManager.Instance().OnGameCredit -= TypingTextPlay;
 
     private TextTypingDisp textTypingDisp;
     void TypingTextPlay()

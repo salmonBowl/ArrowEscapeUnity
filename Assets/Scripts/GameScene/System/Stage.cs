@@ -32,16 +32,4 @@ public class Stage : MonoBehaviour
     /// 重力ベクトル
     /// </summary>
     internal Vector2 GravityForce => new(0, -gravity_volume);
-
-    /// <summary>
-    /// falseならPlayボタンが出る
-    /// </summary>
-    internal bool IsStart { get; set; } = false;
-    internal bool IsClear { get; set; } = false;
-    internal bool IsPerfectClear { get; set; } = false;
-
-    internal void GameStart() { IsStart = true; }
-    internal void Clear() { IsClear = true;}
-    internal void Retry() { IsClear = false; }
-    internal void PerfectClear() { IsPerfectClear = true; }
 }
