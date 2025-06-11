@@ -1,6 +1,6 @@
 /*
-    PlayerController.cs
-        入力に対してPlayerを動かします
+    Player.cs
+        Playerを動かします
 
         処理
         ・カーソルキー入力を取得
