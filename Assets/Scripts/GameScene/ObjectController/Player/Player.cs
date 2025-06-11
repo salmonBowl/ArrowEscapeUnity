@@ -42,11 +42,8 @@ public class Player : MonoBehaviour
     {
         swordCoolTime = attackInterval;
         mover = GetComponent<PlayerMove>();
-    }
-    void OnEnable()
-    {
-        UpdateManager manager = UpdateManager.Instance;
-        manager.OnUpdate += MyUpdate;
+
+        UpdateManager.Instance.OnUpdate += MyUpdate;
     }
 
     void MyUpdate()

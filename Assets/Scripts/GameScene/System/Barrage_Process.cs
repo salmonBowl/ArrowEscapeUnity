@@ -28,8 +28,9 @@ public class Barrage_Process : ArrowGenerator
         waitTime = Enumerable.Repeat(0.0f, 3).ToList();
 
         stageWidth = stage.Width;
+
+        UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
     }
-    void OnEnable() => UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
 
     void UpdateWhileGame()
     {

@@ -1,6 +1,6 @@
-using UnityEngine;
 using System;
-using Unity.VisualScripting;
+using System.Collections;
+using UnityEngine;
 
 public class UpdateManager : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class UpdateManager : MonoBehaviour
     public event Action OnUpdateWhileGameCredit;
 
     public event Action OnUpdateIfNotTitle;
+
 
     void Update()
     {
@@ -46,7 +47,7 @@ public class UpdateManager : MonoBehaviour
     }
 
     public static UpdateManager Instance { get; private set; }
-    void Start()
+    UpdateManager()
     {
         Instance = this;
     }
