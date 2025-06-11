@@ -31,16 +31,9 @@ public class PlayerMove : MonoBehaviour
     [Space(20)]
     [SerializeField] SpriteRenderer particle_illum;
 
-    private readonly float stageWidth;
-    private readonly float groundLevel;
-    private readonly Vector2 gravityForce;
-
-    public PlayerMove()
-    {
-        stageWidth = background.Width;
-        groundLevel = background.GroundLevel;
-        gravityForce = background.GravityForce;
-    }
+    private float stageWidth;
+    private float groundLevel;
+    private Vector2 gravityForce;
 
     Vector2 myVelocity = new();
 
@@ -48,6 +41,10 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        stageWidth = background.Width;
+        groundLevel = background.GroundLevel;
+        gravityForce = background.GravityForce;
+
         input = GetComponent<PlayerInput>();
     }
 

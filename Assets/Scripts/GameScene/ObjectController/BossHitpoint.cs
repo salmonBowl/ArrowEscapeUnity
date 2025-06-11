@@ -9,11 +9,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public interface IBossHealthStatus
-{
-    float HealthPoint { get; }
-}
-
 public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
 {
     [Space(20)]
