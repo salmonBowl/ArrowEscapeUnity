@@ -1,0 +1,5 @@
+
+interface IUpdatable
+{
+    void Update();
+}
