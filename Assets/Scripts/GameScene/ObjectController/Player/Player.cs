@@ -34,16 +34,14 @@ public class Player : MonoBehaviour
     float invincible_timeCount = 0;
     public float player_colorAlpha = 1;
 
-    SpriteRenderer playerSpriteRenderer;
-
     public static event Action OnAttacked;
 
-    readonly PlayerMove mover = new();
+    PlayerMove mover;
 
     void Start()
     {
         swordCoolTime = attackInterval;
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        mover = GetComponent<PlayerMove>();
     }
     void OnEnable()
     {
