@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PlayerHitpoint : MonoBehaviour
 {
     [HideInInspector] public float HP = 1.0f;
-    [SerializeField] Stage stage;
     [SerializeField] BossHealthPoint bosshp;
     [SerializeField] RetryGame retrypanel;
     [Space(20)]

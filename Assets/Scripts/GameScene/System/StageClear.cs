@@ -41,31 +41,39 @@ public class StageClear : MonoBehaviour
 
         // 1つの生成に何フレーム使うか、最初は量が少ない
         float genInterval = confetti_maxInterval * Mathf.Max(confetti_timeToMax / Mathf.Max(0.001f, time), 1);
-        frameCount++;
 
+        frameCount++;
         if (genInterval <= frameCount)
         {
+            frameCount -= genInterval;
+
             // ダメージ0でクリアしたか判定
             if (playerhp.HP == 1)
             {
                 EventManager.Instance().Event("ChangeClearModePerfect");
             }
 
-            if (GamePhase.Instance().IsPerfectClear) // ダメージ0でクリアしたとき
-            {
-                Confetti = Arrow; // 紙吹雪の代わりに矢が降る
-            }
+            // 生成場所を計算
+            float halfGenRange = stage.Width / 2;
+            float genPosX = Random.Range(-halfGenRange, halfGenRange);
+
+            GameObject scatterTarget = null;
+
+            GamePhase phase = GamePhase.Instance();
+            if (phase.IsGameClear)
+                scatterTarget = Confetti;
+            else if (phase.IsPerfectClear) // ダメージ0でクリアしたとき
+                scatterTarget = Arrow; // 代わりにArrowが降る
+            else
+                Debug.LogError("GamePhaseが \"GameClear\" でも \"PerfectClear\" でもない状態でConfettiクラスのUpdateが呼ばれています");
 
             // 紙吹雪生成
-            float half_genRange = stage.Width / 2;
-            GameObject confetti = Instantiate(Confetti, new Vector3(Random.Range(-half_genRange, half_genRange), generateHight, 0), Quaternion.identity);
+            GameObject confetti = Instantiate(scatterTarget, new Vector3(genPosX, generateHight, 0), Quaternion.identity);
 
-            if (stage.IsPerfectClear)
+            if (phase.IsPerfectClear)
             {
                 confetti.GetComponent<ArrowController>().wait_time = 0;
             }
-
-            frameCount -= genInterval;
         }
     }
 }

@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class EventManager : SingletonBase<EventManager>
 {
+
     public event Action OnGameplayStart;
     public event Action OnRetry;
     public event Action OnGameClear;
-    public event Action OnPerfectClear;
+    //public event Action OnPerfectClear;
     public event Action OnGameCredit;
 
     public void Event(string eventName)
@@ -42,7 +43,7 @@ public class EventManager : SingletonBase<EventManager>
             case "ChangeClearModePerfect":
 
                 phase.CurrentPhase = GamePhase.Status.GamePerfectClear;
-                OnPerfectClear?.Invoke();
+                //OnPerfectClear?.Invoke();
 
                 break;
 

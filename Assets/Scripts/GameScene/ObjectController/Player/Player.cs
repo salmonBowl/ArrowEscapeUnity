@@ -19,7 +19,7 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     [Header("他スクリプトからの情報取得用")]
-    [SerializeField] Stage stage;
+    [SerializeField] Background stage;
     [SerializeField] PlayerHitpoint playerhp;
     [SerializeField] JumpCharge jumpcharge;
     [Space(20)]
@@ -91,16 +91,9 @@ public class Player : MonoBehaviour
         swordCoolTime = Mathf.Max(0, swordCoolTime - Time.deltaTime);
         if(swordCoolTime == 0)
         {
-            if (sword.activeSelf == false && stage.IsClear == false)
+            if (GamePhase.Instance().IsGame)
             {
-                if (stage.IsPerfectClear)
-                {
-
-                }
-                else
-                {
-                    sword.SetActive(true);
-                }
+                sword.SetActive(true);
             }
         }
         AttackOnSword();

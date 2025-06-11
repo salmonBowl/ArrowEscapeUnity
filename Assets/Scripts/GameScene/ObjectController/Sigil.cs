@@ -18,17 +18,17 @@ public class Sigil : MonoBehaviour
     }
     public void Disp()
     {
-        if (stage.IsStart)
-        {
-            // swordを表示
-            sword.SetActive(true);
-            playButton.SetActive(false);
-        }
-        else
+        if (GamePhase.Instance().IsTitle)
         {
             // playButtonを表示
             sword.SetActive(false);
             playButton.SetActive(true);
+        }
+        else
+        {
+            // swordを表示
+            sword.SetActive(true);
+            playButton.SetActive(false);
         }
     }
 }

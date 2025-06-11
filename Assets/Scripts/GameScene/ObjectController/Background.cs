@@ -5,7 +5,7 @@
 
 using UnityEngine;
 
-public class Stage : MonoBehaviour
+public class Background : MonoBehaviour
 {
     // Inspector fields
     [Header("")]

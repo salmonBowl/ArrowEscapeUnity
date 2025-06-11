@@ -33,34 +33,34 @@ public class Barrage_Process : ArrowGenerator
 
     void UpdateWhileGame()
     {
-            // waitTime[]をカウントダウン
-            waitTime = waitTime.Select(x => Mathf.Max(0, x - Time.deltaTime))
-                               .ToList();
+        // waitTime[]をカウントダウン
+        waitTime = waitTime.Select(x => Mathf.Max(0, x - Time.deltaTime))
+                           .ToList();
 
-            if (bosshp.HealthPoint < 1 && stage.IsStart)
-            {
-                // 並んだArrowが降ってくる攻撃
-                Parallel5Arrow(true);
-                // Playerに向けたArrowの攻撃
-                Emission5Arrow();
-            }
-            if (bosshp.HealthPoint < 0.75f)
-            {
-                // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
-                Parallel5Arrow(false);
-                // ビームが打たれる攻撃
-                Beam();
-            }
-            if (bosshp.HealthPoint < 0.4f)
-            {
-                // Arrow爆弾が投下される
-                ArrowBom();
-            }
-            if (bosshp.HealthPoint < 0.2f)
-            {
-                // 普通のArrow
-                SingleArrow();
-            }
+        if (bosshp.HealthPoint < 1)
+        {
+            // 並んだArrowが降ってくる攻撃
+            Parallel5Arrow(true);
+            // Playerに向けたArrowの攻撃
+            Emission5Arrow();
+        }
+        if (bosshp.HealthPoint < 0.75f)
+        {
+            // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
+            Parallel5Arrow(false);
+            // ビームが打たれる攻撃
+            Beam();
+        }
+        if (bosshp.HealthPoint < 0.4f)
+        {
+            // Arrow爆弾が投下される
+            ArrowBom();
+        }
+        if (bosshp.HealthPoint < 0.2f)
+        {
+            // 普通のArrow
+            SingleArrow();
+        }
     }
 
     /*

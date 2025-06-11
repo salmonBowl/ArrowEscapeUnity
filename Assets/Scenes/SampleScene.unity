@@ -919,7 +919,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099419036}
-  - component: {fileID: 1099419037}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -946,21 +945,6 @@ Transform:
   - {fileID: 1894898415}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1099419037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099419035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16aa83bc36274d247be5fabc91f95600, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 15
-  groundLevel: -7
-  gravity_volume: 0.3
 --- !u!1 &1406897494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,7 +1211,7 @@ GameObject:
   - component: {fileID: 1546314269}
   - component: {fileID: 1546314268}
   m_Layer: 5
-  m_Name: CanvasWorldspece_layer4
+  m_Name: CanvasWorldspece_layer6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1496,9 +1480,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textbox: {fileID: 1586319331}
-  stage: {fileID: 0}
-  text: Thank you for Playing!
-  textDispSpeed: 5
+  message: Thank you for playing!
+  textDispSpeed: 3
 --- !u!1 &1638939282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1519,6 @@ MonoBehaviour:
   Player: {fileID: 2044247181}
   generateHeight: 8
   stageWidth: 0
-  bosshp: {fileID: 1901834175}
   beam: {fileID: 1638939285}
 --- !u!4 &1638939284
 Transform:
@@ -2030,6 +2012,7 @@ GameObject:
   - component: {fileID: 1955725544}
   - component: {fileID: 1955725543}
   - component: {fileID: 1955725545}
+  - component: {fileID: 1955725546}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -2204,6 +2187,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1955725546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955725541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16aa83bc36274d247be5fabc91f95600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 15
+  groundLevel: -7
+  gravity_volume: 0.3
 --- !u!1 &2044247181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,8 +2234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c541a1b8783dc6240a1930fc1b6fc9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
-  bosshp: {fileID: 1901834175}
+  stage: {fileID: 1955725546}
   playerhp: {fileID: 1844454353}
   jumpcharge: {fileID: 1028889681}
   playerWidth: 1.8
