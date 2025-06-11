@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class StageClear : MonoBehaviour
 {
-    [SerializeField] Stage stage;
+    [SerializeField] Background background;
     [SerializeField] GameObject Confetti;
     [SerializeField] GameObject Arrow;
     [SerializeField] PlayerHitpoint playerhp;
@@ -54,7 +54,7 @@ public class StageClear : MonoBehaviour
             }
 
             // 生成場所を計算
-            float halfGenRange = stage.Width / 2;
+            float halfGenRange = background.Width / 2;
             float genPosX = Random.Range(-halfGenRange, halfGenRange);
 
             GameObject scatterTarget = null;

@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
 
     public static event Action OnAttacked;
 
+    readonly PlayerInput input = new();
+    readonly PlayerMove mover = new();
+
     Player()
     {
         stageWidth = stage.Width;
@@ -74,6 +77,9 @@ public class Player : MonoBehaviour
     }
     void MyUpdate()
     {
+        // プレイヤーの座標に関する処理
+        Update_PlayerMove();
+
         // パーティクルを減衰
         float illumdecrease = 0.05f;
         Color pcolor = particle_illum.color;
@@ -84,8 +90,6 @@ public class Player : MonoBehaviour
             : new Color(1, 1, 1, player_colorAlpha);
         //jumpcharge.GetComponent<SpriteRenderer>().color = new Color(1, 1, 0, 0.7f * player_colorAlpha);
 
-        // プレイヤーの座標に関する処理
-        Update_PlayerMove();
 
         // 攻撃関係の処理
         swordCoolTime = Mathf.Max(0, swordCoolTime - Time.deltaTime);
@@ -111,24 +115,23 @@ public class Player : MonoBehaviour
     // プレイヤーの座標に関する処理をまとめた
     void Update_PlayerMove()
     {
+        input.ReadInput();
+        float inputX = input.X;
+        bool jumpPressed = input.JumpPressed;
+
         // 更新前と更新後のPlayerの座標
         Vector2 myPosition = transform.position;
         Vector2 update_position = myPosition;
-
-        // カーソルキーの入力
-        float input_x = Input_vh(false).x;
-        float input_y = Input_vh(true).y;
-        Debug.Log($"input_x : {input_x}");
 
         // velocityの更新
         if (Grounded(myPosition))
         {
             // 地上では入力がそのまま移動
-            myVelocity.x = input_x * speed_x;
+            myVelocity.x = inputX * speed_x;
             myVelocity.y = 0;
 
             // ジャンプに関する処理
-            Jump(input_y, true);
+            Jump(jumpPressed, true);
         }
         else
         {
@@ -137,12 +140,12 @@ public class Player : MonoBehaviour
             velocity.x = speed_x * Mathf.Clamp(velocity.x + (input_x * 0.01f), -1, 1);
             */
             // 空中でも等速的な移動
-            myVelocity.x = input_x * speed_x;
+            myVelocity.x = inputX * speed_x;
 
             myVelocity += gravityForce;
 
             // 2段ジャンプに関する処理
-            Jump(input_y, false);
+            Jump(jumpPressed, false);
         }
 
         // Playerの移動処理
@@ -165,7 +168,7 @@ public class Player : MonoBehaviour
             ジャンプをする関数ではなくUpdateの中で動く、ジャンプに関する色々な処理
             grondedがfalseだと2段ジャンプの挙動になります
      */
-    void Jump(float input_y, bool grounded)
+    void Jump(bool jumpPressed, bool grounded)
     {
         // jumpCharge
         if (grounded)
@@ -181,7 +184,7 @@ public class Player : MonoBehaviour
         }
 
         // ↑が押された時
-        if (input_y == 1)
+        if (jumpPressed)
         {
             // 通常のジャンプ処理
             if (grounded)
@@ -227,68 +230,6 @@ public class Player : MonoBehaviour
 
             swordCoolTime = attackInterval;
         }
-    }
-
-    /*
-        カーソルキーの入力を返す関数
-            keydownをtrueにするとGetKeyDown,
-            falseならGetKeyで入力をとる
-        return : Vector2
-            x成分には左右キーの入力 (-1 ～ 1)
-            y成分には上下キーの入力 (-1 ～ 1)
-                を返す
-        追加 : WASDとスペースでもよし
-    */
-    Vector2 Input_vh(bool keydown)
-    {
-        int vx = 0;
-        if ((keydown ?
-             Input.GetKeyDown(KeyCode.RightArrow) :
-             Input.GetKey(KeyCode.RightArrow))
-         || (keydown ?
-            Input.GetKeyDown(KeyCode.D) :
-            Input.GetKey(KeyCode.D)))
-        {
-            vx++;
-        }
-        if ((keydown ?
-             Input.GetKeyDown(KeyCode.LeftArrow) :
-             Input.GetKey(KeyCode.LeftArrow))
-         || (keydown ?
-             Input.GetKeyDown(KeyCode.A) :
-             Input.GetKey(KeyCode.A)))
-        {
-            vx--;
-        }
-        int vy = 0;
-        if ((keydown ?
-             Input.GetKeyDown(KeyCode.UpArrow) :
-             Input.GetKey(KeyCode.UpArrow))
-         || (keydown ?
-             Input.GetKeyDown(KeyCode.W) :
-             Input.GetKey(KeyCode.W))
-          || (keydown && Input.GetKeyDown(KeyCode.Space)))
-        {
-            vy++;
-        }
-        if ((keydown ?
-             Input.GetKeyDown(KeyCode.DownArrow) :
-             Input.GetKey(KeyCode.DownArrow))
-         || (keydown ?
-             Input.GetKeyDown(KeyCode.S) :
-             Input.GetKey(KeyCode.S)))
-        {
-            if (keydown && vy == 1)
-            {
-                // ↑と↓を同時入力した時は↑が優先される
-            }
-            else
-            {
-                vy--;
-            }
-        }
-
-        return new Vector2(vx, vy);
     }
 
     // swordに当たっているかどうかを返す
