@@ -2,33 +2,25 @@ using UnityEngine;
 
 public class Sigil : MonoBehaviour
 {
-    public Stage stage;
-    public GameObject sword;
-    public GameObject playButton;
+    [SerializeField]
+    GameObject sword;
+
+    [SerializeField]
+    GameObject playButton;
 
     void Start()
     {
-        stage = GameObject.Find("background").GetComponent<Stage>();
-        Disp();
+        EventManager.Instance().OnGameplayStart += ChangeDispToSword;
+
+        // タイトルではplayButtonを表示
+        sword.SetActive(false);
+        playButton.SetActive(true);
     }
 
-    void Update()
+    void ChangeDispToSword()
     {
-        Disp();
-    }
-    public void Disp()
-    {
-        if (GamePhase.Instance().IsTitle)
-        {
-            // playButtonを表示
-            sword.SetActive(false);
-            playButton.SetActive(true);
-        }
-        else
-        {
-            // swordを表示
-            sword.SetActive(true);
-            playButton.SetActive(false);
-        }
+        // swordを表示
+        sword.SetActive(true);
+        playButton.SetActive(false);
     }
 }

@@ -92,8 +92,10 @@ public class Barrage_Process : ArrowGenerator
                 float arrowGap = 0.9f;
 
                 // 生成する範囲の調整
-                float half_genRange = ((center? 0 : stageWidth) - (arrowGap * quantity)) / 2;
-                GeneratePattern01(Random.Range(-half_genRange, half_genRange), quantity, arrowGap);
+                float halfGenRange = ((center ? 0 : stageWidth) - (arrowGap * quantity)) / 2;
+
+                float genPosX = Random.Range(-halfGenRange, halfGenRange);
+                GeneratePattern01(genPosX, quantity, arrowGap);
 
                 waitTime[0] = 1.5f;
             }

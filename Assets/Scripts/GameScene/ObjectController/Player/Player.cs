@@ -217,7 +217,6 @@ public class Player : MonoBehaviour
             if (GamePhase.Instance().IsTitle)
             {
                 EventManager.Instance().Event("GameStart");
-                sword.GetComponent<Sigil>().Disp();
             }
             else
             {

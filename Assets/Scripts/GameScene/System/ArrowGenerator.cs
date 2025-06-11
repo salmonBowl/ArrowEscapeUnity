@@ -2,9 +2,6 @@
     ArrowGenerator.cs
         矢の動的生成を行います
 
-        ここでは動きパターンの定義をするだけで、実際のゲームループの処理は
-        ArrowGenerator_Process(ArrowGeneratorの継承クラス)で行っています
-
         処理
             ・攻撃のパターンごとの生成関数
  */
@@ -14,7 +11,7 @@ public class ArrowGenerator : MonoBehaviour
 {
     [Header("他スクリプトからの情報取得用")]
     [SerializeField] 
-    protected Stage stage;
+    protected Background stage;
     [Space(20)]
     [SerializeField] GameObject Arrow;
     [SerializeField] GameObject ArrowBom;
