@@ -14,7 +14,7 @@ using UnityEngine;
 public class Barrage_Process : ArrowGenerator
 {
     //[SerializeField] StageInfo stageinfo_;
-    [SerializeField] BossHitpoint bosshp;
+    [SerializeField] IBossHealthStatus bosshp;
     [SerializeField] BeamGenerator beam;
 
     // 時間経過で減っていく変数。複数個必要になりそうなのでリストに
@@ -38,26 +38,26 @@ public class Barrage_Process : ArrowGenerator
             waitTime = waitTime.Select(x => Mathf.Max(0, x - Time.deltaTime))
                                .ToList();
 
-            if (bosshp.HP < 1 && stage.IsStart)
+            if (bosshp.HealthPoint < 1 && stage.IsStart)
             {
                 // 並んだArrowが降ってくる攻撃
                 Parallel5Arrow(true);
                 // Playerに向けたArrowの攻撃
                 Emission5Arrow();
             }
-            if (bosshp.HP < 0.75f)
+            if (bosshp.HealthPoint < 0.75f)
             {
                 // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
                 Parallel5Arrow(false);
                 // ビームが打たれる攻撃
                 Beam();
             }
-            if (bosshp.HP < 0.4f)
+            if (bosshp.HealthPoint < 0.4f)
             {
                 // Arrow爆弾が投下される
                 ArrowBom();
             }
-            if (bosshp.HP < 0.2f)
+            if (bosshp.HealthPoint < 0.2f)
             {
                 // 普通のArrow
                 SingleArrow();
