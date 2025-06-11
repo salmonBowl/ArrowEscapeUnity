@@ -31,7 +31,7 @@ public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
         gauge_fill.fillAmount = 0;
         gauge_backGround.fillAmount = 0;
 
-        UpdateManager.Instance().OnUpdateIfNotTitle += UpdateIfNotTitle;
+        UpdateManager.Instance.OnUpdateIfNotTitle += UpdateIfNotTitle;
 
         Player.OnAttacked += Attack;
         EventManager.Instance().OnRetry += OnRetryGame;

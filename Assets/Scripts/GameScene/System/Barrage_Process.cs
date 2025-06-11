@@ -29,7 +29,7 @@ public class Barrage_Process : ArrowGenerator
 
         stageWidth = stage.Width;
     }
-    void OnEnable() => UpdateManager.Instance().OnUpdateWhileGame += UpdateWhileGame;
+    void OnEnable() => UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
 
     void UpdateWhileGame()
     {

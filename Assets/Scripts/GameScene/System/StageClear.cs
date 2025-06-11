@@ -25,7 +25,7 @@ public class StageClear : MonoBehaviour
 
     void Start()
     {
-        UpdateManager manager = UpdateManager.Instance();
+        UpdateManager manager = UpdateManager.Instance;
         manager.OnUpdateWhileGameClear += UpdateWhileGameClearOrPerfectClear;
         manager.OnUpdateWhilePerfectClear += UpdateWhileGameClearOrPerfectClear;
 

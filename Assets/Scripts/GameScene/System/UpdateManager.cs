@@ -1,6 +1,8 @@
+using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
-public class UpdateManager : SingletonBase<UpdateManager>
+public class UpdateManager : MonoBehaviour
 {
     // 色々な条件つきのUpdate
     
@@ -41,5 +43,11 @@ public class UpdateManager : SingletonBase<UpdateManager>
         {
             OnUpdateIfNotTitle?.Invoke();
         }
+    }
+
+    public static UpdateManager Instance { get; private set; }
+    void Start()
+    {
+        Instance = this;
     }
 }

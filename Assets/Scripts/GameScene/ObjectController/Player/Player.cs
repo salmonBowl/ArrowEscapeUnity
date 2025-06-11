@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     }
     void OnEnable()
     {
-        UpdateManager manager = UpdateManager.Instance();
+        UpdateManager manager = UpdateManager.Instance;
         manager.OnUpdate += MyUpdate;
     }
 
