@@ -39,6 +39,13 @@ public class EventManager : SingletonBase<EventManager>
 
                 break;
 
+            case "ChangeClearModePerfect":
+
+                phase.CurrentPhase = GamePhase.Status.GamePerfectClear;
+                OnPerfectClear?.Invoke();
+
+                break;
+
             case "GameCredit":
 
                 phase.CurrentPhase = GamePhase.Status.ThankYouForPlaying;

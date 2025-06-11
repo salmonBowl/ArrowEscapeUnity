@@ -36,9 +36,11 @@ public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
         gauge_fill.fillAmount = 0;
         gauge_backGround.fillAmount = 0;
 
+        UpdateManager.Instance().OnUpdateIfNotTitle += UpdateIfNotTitle;
+
         Player.OnAttacked += Attack;
+        EventManager.Instance().OnRetry += OnRetryGame;
     }
-    void OnEnable() => UpdateManager.Instance().OnUpdateIfNotTitle += UpdateIfNotTitle;
 
     void UpdateIfNotTitle()
     {
@@ -69,5 +71,13 @@ public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
     void DecreaseHP(float damage)
     {
         hp = Mathf.Max(0, hp - damage);
+    }
+
+    void OnRetryGame()
+    {
+        if (GamePhase.Instance().IsGameCredit == false)
+        {
+            hp = 1;
+        }
     }
 }

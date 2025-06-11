@@ -6,17 +6,37 @@ public class UpdateManager : SingletonBase<UpdateManager>
     
     public event Action OnUpdate;
 
+    public event Action OnUpdateWhileTitle;
     public event Action OnUpdateWhileGame;
+    public event Action OnUpdateWhileGameClear;
+    public event Action OnUpdateWhilePerfectClear;
+    public event Action OnUpdateWhileGameCredit;
+
     public event Action OnUpdateIfNotTitle;
 
     void Update()
     {
         OnUpdate?.Invoke();
 
-        if (GamePhase.Instance().IsGame)
+        switch (GamePhase.Instance().CurrentPhase)
         {
-            OnUpdateWhileGame?.Invoke();
+            case GamePhase.Status.Title:
+                OnUpdateWhileTitle?.Invoke();
+                break;
+            case GamePhase.Status.Game:
+                OnUpdateWhileGame?.Invoke();
+                break;
+            case GamePhase.Status.GameClear:
+                OnUpdateWhileGameClear?.Invoke();
+                break;
+            case GamePhase.Status.GamePerfectClear:
+                OnUpdateWhilePerfectClear?.Invoke();
+                break;
+            case GamePhase.Status.ThankYouForPlaying:
+                OnUpdateWhileGameCredit?.Invoke();
+                break;
         }
+
         if (!GamePhase.Instance().IsTitle)
         {
             OnUpdateIfNotTitle?.Invoke();

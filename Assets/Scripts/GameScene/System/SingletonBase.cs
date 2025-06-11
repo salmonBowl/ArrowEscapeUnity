@@ -16,4 +16,7 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : class, new()
     }
 
     private static T instance;
+
+    private SingletonBase() { }
+
 }

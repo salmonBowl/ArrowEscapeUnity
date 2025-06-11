@@ -12,6 +12,8 @@ public class PlayerHitpoint : MonoBehaviour
     [SerializeField] Slider hpGauge;
     [SerializeField] float[] damage_value;
 
+    void OnEnable() => EventManager.Instance().OnRetry += OnRetryGame;
+
     void Update()
     {
         float gaugeSmoothness = 0.9f; // 0～1.0f
@@ -53,22 +55,14 @@ public class PlayerHitpoint : MonoBehaviour
         yield return new WaitForSeconds(0.08f);
 
         EventManager.Instance().Event("Retry");
-        ResetGame();
 
         StopAllCoroutines();
     }
-    // ゲームのリセット
-    void ResetGame()
-    {
-        yield return new WaitForSeconds(0.08f);
-        if (GamePhase.Instance().IsGameCredit == false)
-        {
-            bosshp.HealthPoint = 1;
-        }
-        HP = 1;
-        EventManager.Instance().Event("Retry");
-        retrypanel.panelalpha = retrypanel.panelalpha_max;
 
-        StopAllCoroutines();
+    // リトライされたとき
+    void OnRetryGame()
+    {
+        HP = 1;
+        retrypanel.panelalpha = retrypanel.panelalpha_max;
     }
 }
