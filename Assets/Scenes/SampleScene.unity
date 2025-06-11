@@ -907,9 +907,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Value: 0
-  player: {fileID: 0}
+  playerSprite: {fileID: 2044247183}
   mySprite: {fileID: 1028889680}
   spriteHeight: 1.9
+  player: {fileID: 2044247182}
 --- !u!1 &1099419035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,7 +1562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed664b576e1253408ed24dfe36474cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
+  background: {fileID: 0}
   Confetti: {fileID: 6377313773574984123, guid: b47542c491b61e249bf63740ac6bba81, type: 3}
   Arrow: {fileID: 8469354205498174539, guid: 49c60f98519bac64594a9d4e396919e4, type: 3}
   playerhp: {fileID: 1844454353}
@@ -1615,7 +1616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de77c9fabeebb9a4e82f288b7b0925f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
   sword: {fileID: 1550135189}
   playButton: {fileID: 241900759}
 --- !u!1 &1715552038
@@ -1745,7 +1745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
-  stage: {fileID: 0}
   bosshp: {fileID: 1901834175}
   retrypanel: {fileID: 1442386362}
   hpGauge: {fileID: 1844454354}
@@ -2213,6 +2212,7 @@ GameObject:
   - component: {fileID: 2044247184}
   - component: {fileID: 2044247183}
   - component: {fileID: 2044247182}
+  - component: {fileID: 2044247187}
   - component: {fileID: 2044247186}
   - component: {fileID: 2044247185}
   m_Layer: 0
@@ -2234,21 +2234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c541a1b8783dc6240a1930fc1b6fc9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 1955725546}
   playerhp: {fileID: 1844454353}
-  jumpcharge: {fileID: 1028889681}
-  playerWidth: 1.8
-  adhesCorrect_y: 0.98
-  particle_illum: {fileID: 1539810774}
-  speed_x: 0.3
-  ratio_airmove: 0.3
-  jumpPower: 1.1
-  jumpChargeSpeed: 0.017
   sword: {fileID: 1677286881}
   swordCircleCol_radius: 1
   attackInterval: 1.5
   invincibleTime: 0.96
   blinking_alpha: 0.34
+  player_colorAlpha: 1
 --- !u!212 &2044247183
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2385,6 +2377,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.3, y: 1.8}
   m_Direction: 0
+--- !u!114 &2044247187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044247181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4503d2db509f25408c8a6f093d3802b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 1955725546}
+  playerWidth: 1.8
+  adhesCorrect_y: 0.98
+  speed: 0.3
+  ratio_airmove: 0.3
+  jumpPower: 1.1
+  jumpcharge: {fileID: 1028889681}
+  jumpChargeSpeed: 0.017
+  particle_illum: {fileID: 1539810774}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
