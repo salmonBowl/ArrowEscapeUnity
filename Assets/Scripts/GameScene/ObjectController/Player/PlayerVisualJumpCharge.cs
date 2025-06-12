@@ -12,17 +12,10 @@ public class PlayerVisualJumpCharge : MonoBehaviour
     [SerializeField] SpriteRenderer jumpChargeSprite;
     [SerializeField] float jumpChargeMaxAlpha;
 
-    [Space(20)]
-
-    [SerializeField] SpriteRenderer particle_illum;
-
-    void Start() => PlayerEventManager.Instance().OnChargeFulled += DispParticle;
-
     void Update()
     {
-        AttenuateParticle();
-
-        if (GamePhase.Instance().IsTitle)
+        bool isVisualFillMode = GamePhase.Instance().IsTitle;
+        if (isVisualFillMode)
         {
             SetFillAmount(jumpCharge.Value);
             RenderAlpha(1, 1);
@@ -33,41 +26,26 @@ public class PlayerVisualJumpCharge : MonoBehaviour
             RenderAlpha(jumpCharge.Value, blink.AlphaRatio);
         }
     }
-    /// <summary>
-    /// チャージが完了したエフェクトを表示します
-    /// </summary>
 
     void SetFillAmount(float value)
     {
         jumpChargeSprite.size = new Vector2(jumpChargeSprite.size.x, playerSpriteHeight * value);
-        jumpChargeSprite.transform.localPosition -= Vector3.up * (transform.localPosition.y - (playerSpriteHeight * (value - 1) * 0.5f));
+        jumpChargeSprite.transform.localPosition = new Vector2(
+            jumpChargeSprite.transform.localPosition.x,
+            playerSpriteHeight / 2 * (value - 1)
+            );
     }
     void RenderAlpha(float jumpCharge, float alphaRatio)
     {
         float chargeAlpha = jumpCharge == 0 ? 0 : (jumpChargeMaxAlpha * jumpCharge);
 
-        Color playerColor = playerSprite.color;
-        Color chargeColor = jumpChargeSprite.color;
-
-        playerColor.a = alphaRatio * 1;
-        chargeColor.a = alphaRatio * chargeAlpha;
-
-        playerSprite.color = playerColor;
-        jumpChargeSprite.color = chargeColor;
+        SetSpriteColorAlpha(playerSprite, 1 * alphaRatio);
+        SetSpriteColorAlpha(jumpChargeSprite, chargeAlpha * alphaRatio);
     }
-
-    void DispParticle()
+    void SetSpriteColorAlpha(SpriteRenderer sprite, float alpha)
     {
-        particle_illum.color = new Color(1, 1, 1, 1);
-    }
-
-
-    // Update内でパーティクルを減衰
-    void AttenuateParticle()
-    {
-        float illumdecrease = 0.05f;
-        Color pcolor = particle_illum.color;
-        particle_illum.color += new Color(0, 0, 0, Mathf.Max(illumdecrease - pcolor.a, 0) - illumdecrease);
-
+        Color color = sprite.color;
+        color.a = alpha;
+        sprite.color = color;
     }
 }
