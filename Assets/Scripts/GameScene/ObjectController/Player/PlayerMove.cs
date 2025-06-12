@@ -35,7 +35,7 @@ public class PlayerMove : MonoBehaviour
 
     Vector2 myVelocity = new();
 
-    private readonly PlayerInput input;
+    [SerializeField] PlayerInput input;
 
     void Awake()
     {

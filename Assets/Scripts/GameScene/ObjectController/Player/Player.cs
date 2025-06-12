@@ -30,8 +30,8 @@ public class Player : MonoBehaviour
 
     public float Invincible_timeCount { get; private set; } = 0;
 
-    readonly PlayerMove mover;
-    readonly PlayerVisual visual;
+    [SerializeField] PlayerMove mover;
+    [SerializeField] PlayerVisual visual;
 
     void Start()
     {

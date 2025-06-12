@@ -2249,6 +2249,8 @@ MonoBehaviour:
   swordCircleCol_radius: 1
   attackInterval: 1.5
   invincibleTime: 0.96
+  mover: {fileID: 2044247187}
+  visual: {fileID: 2044247189}
 --- !u!212 &2044247183
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2405,6 +2407,7 @@ MonoBehaviour:
   jumpPower: 1.1
   jumpcharge: {fileID: 1028889681}
   jumpChargeSpeed: 0.017
+  input: {fileID: 2044247188}
 --- !u!114 &2044247188
 MonoBehaviour:
   m_ObjectHideFlags: 0
