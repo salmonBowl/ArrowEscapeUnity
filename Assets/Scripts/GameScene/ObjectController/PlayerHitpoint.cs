@@ -57,9 +57,17 @@ public class PlayerHitpoint : MonoBehaviour
 
     IEnumerator WaitReset()
     {
-        yield return new WaitForSeconds(0.08f);
 
-        EventManager.Instance().Event("Retry");
+        if (GamePhase.Instance().IsPerfectClear)
+        {
+            yield return new WaitForSeconds(1.5f);
+            EventManager.Instance().Event("GameCredit");
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.08f);
+            EventManager.Instance().Event("Retry");
+        }
 
         StopAllCoroutines();
     }

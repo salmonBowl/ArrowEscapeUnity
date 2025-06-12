@@ -25,7 +25,7 @@ public class PlayerVisualJumpCharge : MonoBehaviour
         if (GamePhase.Instance().IsTitle)
         {
             SetFillAmount(jumpCharge.Value);
-            RenderAlpha(1, blink.AlphaRatio);
+            RenderAlpha(1, 1);
         }
         else
         {
@@ -44,7 +44,7 @@ public class PlayerVisualJumpCharge : MonoBehaviour
     }
     void RenderAlpha(float jumpCharge, float alphaRatio)
     {
-        float chargeAlpha = jumpCharge != 0 ? 0 : (jumpChargeMaxAlpha * jumpCharge);
+        float chargeAlpha = jumpCharge == 0 ? 0 : (jumpChargeMaxAlpha * jumpCharge);
 
         Color playerColor = playerSprite.color;
         Color chargeColor = jumpChargeSprite.color;

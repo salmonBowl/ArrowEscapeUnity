@@ -24,10 +24,7 @@ public class EventManager : SingletonBase<EventManager>
 
             case "Retry":
 
-                if(phase.IsPerfectClear)
-                    phase.CurrentPhase = GamePhase.Status.ThankYouForPlaying;
-                else
-                    phase.CurrentPhase = GamePhase.Status.Game;
+                phase.CurrentPhase = GamePhase.Status.Game;
 
                 OnRetry?.Invoke();
 
