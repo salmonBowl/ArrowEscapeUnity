@@ -12,10 +12,10 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(PlayerMove))]
-[RequireComponent(typeof(PlayerVisual))]
+[RequireComponent(typeof(PlayerVisualBlinking))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] PlayerHitpoint playerhp;
+    [SerializeField] PlayerHealthpoint playerhp;
     [Space(20)]
     [SerializeField] GameObject sword;
     [SerializeField] float swordCircleCol_radius;
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public float Invincible_timeCount { get; private set; } = 0;
 
     [SerializeField] PlayerMove mover;
-    [SerializeField] PlayerVisual visual;
+    [SerializeField] PlayerVisualBlinking visual;
 
     void Start()
     {
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
         if (GamePhase.Instance().IsTitle)
         {
-            EventManager.Instance().Event("GameStart");
+            EventManager.Instance().Event("GameplayStart");
         }
         else
         {
@@ -132,6 +132,6 @@ public class Player : MonoBehaviour
         // 被弾して無敵時間ができる
         Invincible_timeCount = invincibleTime;
 
-        visual.StopBlinking();
+        visual.StartBlinking();
     }
 }

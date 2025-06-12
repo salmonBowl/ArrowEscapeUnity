@@ -9,8 +9,8 @@ public class ThankYouForPlaying : MonoBehaviour
     [Header("textを徐々に表示する速度、1文字あたりのフレーム数を指定します")]
     [SerializeField] int textDispSpeed;
 
-    //void OnEnable() => EventManager.Instance().OnGameCredit += TypingTextPlay;
-    void OnEnable() => EventManager.Instance().OnGameplayStart += TypingTextPlay;
+    void OnEnable() => EventManager.Instance().OnGameCredit += TypingTextPlay;
+    //デバッグ用void OnEnable() => EventManager.Instance().OnGameplayStart += TypingTextPlay;
 
     private TextTypingDisp textTypingDisp;
     void TypingTextPlay()

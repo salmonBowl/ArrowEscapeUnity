@@ -1,17 +1,23 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHitpoint : MonoBehaviour
+public class PlayerHealthpoint : MonoBehaviour
 {
     [HideInInspector] public float HP = 1.0f;
-    [SerializeField] BossHealthPoint bosshp;
+    IBossHealthStatus iBosshp; [SerializeField] SerializeIBossHealthStatus bosshp; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
     [SerializeField] RetryGame retrypanel;
     [Space(20)]
     [SerializeField] Slider hpGauge;
     [SerializeField] float[] damage_value;
 
-    void OnEnable() => EventManager.Instance().OnRetry += OnRetryGame;
+    void Start()
+    {
+        iBosshp = bosshp.Interface();
+
+        EventManager.Instance().OnRetry += OnRetryGame;
+    }
 
     void Update()
     {
@@ -21,7 +27,7 @@ public class PlayerHitpoint : MonoBehaviour
         hpGauge.value = (hpGauge.value * gaugeSmoothness) + (HP * (1 - gaugeSmoothness));
 
         // リトライ時にダメージを受けないように
-        if (bosshp.HealthPoint == 1)
+        if (iBosshp.HealthPoint == 1)
         {
             HP = 1;
         }
@@ -51,9 +57,17 @@ public class PlayerHitpoint : MonoBehaviour
 
     IEnumerator WaitReset()
     {
-        yield return new WaitForSeconds(0.08f);
 
-        EventManager.Instance().Event("Retry");
+        if (GamePhase.Instance().IsPerfectClear)
+        {
+            yield return new WaitForSeconds(1.5f);
+            EventManager.Instance().Event("GameCredit");
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.08f);
+            EventManager.Instance().Event("Retry");
+        }
 
         StopAllCoroutines();
     }

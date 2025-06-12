@@ -7,21 +7,24 @@
             ・
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Barrage_Process : ArrowGenerator
 {
-    //[SerializeField] StageInfo stageinfo_;
-    [SerializeField] IBossHealthStatus bosshp;
+    [SerializeField] SerializeIBossHealthStatus iBossHelthStatus; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
     [SerializeField] BeamGenerator beam;
+    IBossHealthStatus bosshp;
 
     // 時間経過で減っていく変数。複数個必要になりそうなのでリストに
     List<float> waitTime;
 
     void Start()
     {
+        bosshp = iBossHelthStatus.Interface();
+
         Application.targetFrameRate = 60;
 
         // Listの初期化
@@ -70,7 +73,7 @@ public class Barrage_Process : ArrowGenerator
      */
     bool Fixed_Probability(int num)
     {
-        int rand_value = Random.Range(0, num);
+        int rand_value = UnityEngine.Random.Range(0, num);
         if (rand_value == 1)
         {
             return true;
@@ -95,7 +98,7 @@ public class Barrage_Process : ArrowGenerator
                 // 生成する範囲の調整
                 float halfGenRange = ((center ? 0 : stageWidth) - (arrowGap * quantity)) / 2;
 
-                float genPosX = Random.Range(-halfGenRange, halfGenRange);
+                float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
                 GeneratePattern01(genPosX, quantity, arrowGap);
 
                 waitTime[0] = 1.5f;
@@ -111,7 +114,7 @@ public class Barrage_Process : ArrowGenerator
             {
                 // ビームの生成
                 List<float> beamhight_candidate = new() { -6f, -6f, -3f, 0 };
-                float beamhight1 = beamhight_candidate[Random.Range(0, beamhight_candidate.Count)];
+                float beamhight1 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
                 beam.GenerateBeam(beamhight1);
 
                 // 運が悪いともう一本打たれる仕組み
@@ -127,7 +130,7 @@ public class Barrage_Process : ArrowGenerator
                     }
 
                     // ビーム2の生成
-                    float beamhight2 = beamhight_candidate[Random.Range(0, beamhight_candidate.Count)];
+                    float beamhight2 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
                     beam.GenerateBeam(beamhight2);
                 }
 
@@ -149,7 +152,7 @@ public class Barrage_Process : ArrowGenerator
 
                 // 生成する範囲の調整
                 float half_genRange = stageWidth / 2;
-                GeneratePattern02(Random.Range(-half_genRange, half_genRange), quantity, anglerange);
+                GeneratePattern02(UnityEngine.Random.Range(-half_genRange, half_genRange), quantity, anglerange);
 
                 waitTime[0] = 1.5f;
                 waitTime[1] = 1.5f;
@@ -165,7 +168,7 @@ public class Barrage_Process : ArrowGenerator
             {
                 // 生成する範囲の調整
                 float half_genRange = stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
-                GeneratePattern03(Random.Range(-half_genRange, half_genRange));
+                GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
 
                 waitTime[2] = 5f;
             }
@@ -178,7 +181,7 @@ public class Barrage_Process : ArrowGenerator
         {
             // 生成する範囲の調整
             float half_genRange = stageWidth / 2;
-            GeneratePattern01(Random.Range(-half_genRange, half_genRange), 1, 0);
+            GeneratePattern01(UnityEngine.Random.Range(-half_genRange, half_genRange), 1, 0);
         }
     }
 }

@@ -817,6 +817,7 @@ GameObject:
   - component: {fileID: 1028889679}
   - component: {fileID: 1028889680}
   - component: {fileID: 1028889681}
+  - component: {fileID: 1028889682}
   m_Layer: 0
   m_Name: jump_charge
   m_TagString: Untagged
@@ -906,6 +907,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1587795ec8c7f36499964f20174573ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1028889682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028889678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c88537bb2ed9345a44f6f7679df99b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpCharge: {fileID: 1028889681}
+  blink: {fileID: 2044247189}
+  playerSprite: {fileID: 2044247183}
+  playerSpriteHeight: 1.9
+  jumpChargeSprite: {fileID: 1028889680}
+  jumpChargeMaxAlpha: 0.7
+  particle_illum: {fileID: 1539810774}
 --- !u!1 &1099419035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,6 +1536,8 @@ MonoBehaviour:
   Player: {fileID: 2044247181}
   generateHeight: 8
   stageWidth: 0
+  iBossHelthStatus:
+    gameObjectContainInterface: {fileID: 1901834173}
   beam: {fileID: 1638939285}
 --- !u!4 &1638939284
 Transform:
@@ -1713,7 +1735,7 @@ GameObject:
   - component: {fileID: 1844454354}
   - component: {fileID: 1844454353}
   m_Layer: 5
-  m_Name: hp
+  m_Name: playerhp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1753,13 +1775,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
-  bosshp: {fileID: 1901834175}
+  bosshp:
+    gameObjectContainInterface: {fileID: 1901834173}
   retrypanel: {fileID: 1442386362}
   hpGauge: {fileID: 1844454354}
   damage_value:
-  - 0.01
-  - 0
-  - 0
+  - 0.3
+  - 0.4
+  - 0.8
 --- !u!114 &1844454354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,7 +2230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 15
   groundLevel: -7
-  gravity_volume: 0.3
+  gravity_volume: 1.9
 --- !u!1 &2044247181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,9 +2425,9 @@ MonoBehaviour:
   background: {fileID: 1955725546}
   playerWidth: 1.8
   adhesCorrect_y: 0.98
-  speed: 0.3
+  speed: 18
   ratio_airmove: 0.3
-  jumpPower: 1.1
+  jumpPower: 68
   jumpcharge: {fileID: 1028889681}
   jumpChargeSpeed: 0.017
   input: {fileID: 2044247188}
@@ -2433,12 +2456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d401e03e88135164e85c5219858b86f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 2044247183}
-  jumpChargeSprite: {fileID: 1028889680}
-  spriteHeight: 0
-  jumpCharge: {fileID: 1028889681}
-  particle_illum: {fileID: 1539810774}
-  blinking_alpha: 0
+  lowestAlpha: 0.4
+  blinkInterval: 0.15
 --- !u!114 &2044247190
 MonoBehaviour:
   m_ObjectHideFlags: 0

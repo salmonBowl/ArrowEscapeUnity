@@ -14,7 +14,7 @@ public class StageClear : MonoBehaviour
     [SerializeField] Background background;
     [SerializeField] GameObject Confetti;
     [SerializeField] GameObject Arrow;
-    [SerializeField] PlayerHitpoint playerhp;
+    [SerializeField] PlayerHealthpoint playerhp;
     [SerializeField] float waitConfetti; // ステージクリアの余韻のために少し時間を空けて降らせたい
     [SerializeField] float confetti_maxInterval;
     [SerializeField] float confetti_timeToMax;

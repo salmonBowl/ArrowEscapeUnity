@@ -47,7 +47,7 @@ public class PlayerMove : MonoBehaviour
     // プレイヤーの座標に関する処理をまとめた
     public void MoveUpdate()
     {
-        Debug.Log("PlayerMove.MoveUpdate()");
+        //Debug.Log("PlayerMove.MoveUpdate()");
 
         input.ReadInput();
         float inputX = input.X;
@@ -57,7 +57,7 @@ public class PlayerMove : MonoBehaviour
         Vector2 myPosition = transform.position;
         Vector2 update_position = myPosition;
 
-        Debug.Log("Grounded : " + Grounded(myPosition));
+        //Debug.Log("Grounded : " + Grounded(myPosition));
 
         if (Grounded(myPosition)) //地上
         {
@@ -65,7 +65,7 @@ public class PlayerMove : MonoBehaviour
             myVelocity.x = inputX * speed;
             myVelocity.y = 0;
 
-            Debug.Log("Player grounded");
+            //Debug.Log("Player grounded");
 
             jumpcharge.SetValue(Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1));
 
@@ -98,7 +98,7 @@ public class PlayerMove : MonoBehaviour
 
         // Playerの移動処理
 
-        update_position += myVelocity;
+        update_position += myVelocity * Time.deltaTime;
         // 位置補正
         // 画面外に行くならxを補正
         float moverange_half = (stageWidth - playerWidth) / 2;
