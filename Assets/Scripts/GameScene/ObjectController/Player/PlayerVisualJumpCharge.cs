@@ -12,17 +12,10 @@ public class PlayerVisualJumpCharge : MonoBehaviour
     [SerializeField] SpriteRenderer jumpChargeSprite;
     [SerializeField] float jumpChargeMaxAlpha;
 
-    [Space(20)]
-
-    [SerializeField] SpriteRenderer particle_illum;
-
-    void Start() => PlayerEventManager.Instance().OnChargeFulled += DispParticle;
-
     void Update()
     {
-        AttenuateParticle();
-
-        if (GamePhase.Instance().IsTitle)
+        bool isVisualFillMode = GamePhase.Instance().IsTitle;
+        if (isVisualFillMode)
         {
             SetFillAmount(jumpCharge.Value);
             RenderAlpha(1, 1);
@@ -46,26 +39,13 @@ public class PlayerVisualJumpCharge : MonoBehaviour
     {
         float chargeAlpha = jumpCharge == 0 ? 0 : (jumpChargeMaxAlpha * jumpCharge);
 
-        playerSprite.color = SpriteSetAlpha(playerSprite, 1 * alphaRatio);
-        jumpChargeSprite.color = SpriteSetAlpha(jumpChargeSprite, chargeAlpha * alphaRatio);
+        SetSpriteColorAlpha(playerSprite, 1 * alphaRatio);
+        SetSpriteColorAlpha(jumpChargeSprite, chargeAlpha * alphaRatio);
     }
-    Color SpriteSetAlpha(SpriteRenderer sprite, float alpha)
+    void SetSpriteColorAlpha(SpriteRenderer sprite, float alpha)
     {
         Color color = sprite.color;
         color.a = alpha;
-        return color;
-    }
-
-    // Update内でパーティクルを減衰
-    void AttenuateParticle()
-    {
-        float illumdecrease = 0.05f;
-        Color particleColor = particle_illum.color;
-        particleColor.a = Mathf.Max(particleColor.a - illumdecrease, 0);
-        particle_illum.color = particleColor;
-    }
-    void DispParticle()
-    {
-        particle_illum.color = new Color(1, 1, 1, 1);
+        sprite.color = color;
     }
 }
