@@ -46,7 +46,7 @@ public class PlayerVisual : MonoBehaviour
     void SetFillAmount(float value)
     {
         jumpChargeSprite.size = new Vector2(jumpChargeSprite.size.x, spriteHeight * value);
-        transform.localPosition -= Vector3.up * (transform.localPosition.y - (spriteHeight * (value - 1) * 0.5f));
+        jumpChargeSprite.transform.localPosition -= Vector3.up * (transform.localPosition.y - (spriteHeight * (value - 1) * 0.5f));
     }
     void DispParticleIllim()
     {

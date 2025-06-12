@@ -30,5 +30,7 @@ public class PlayerInput : MonoBehaviour
     {
         X = movex.ReadValue<float>();
         JumpTriggered = jumpPressed.triggered;
+
+        //Debug.Log($"JumpTriggerd : {JumpTriggered}");
     }
 }

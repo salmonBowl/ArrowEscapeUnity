@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField, Header("Backgroundから情報を取得します")]
+    [SerializeField, Header("ステージの情報を取得します")]
     Background background;
 
     [Header("移動範囲の制限のために使います")]
@@ -47,6 +47,8 @@ public class PlayerMove : MonoBehaviour
     // プレイヤーの座標に関する処理をまとめた
     public void MoveUpdate()
     {
+        Debug.Log("PlayerMove.MoveUpdate()");
+
         input.ReadInput();
         float inputX = input.X;
         bool jumpTriggered = input.JumpTriggered;
@@ -55,18 +57,28 @@ public class PlayerMove : MonoBehaviour
         Vector2 myPosition = transform.position;
         Vector2 update_position = myPosition;
 
-        // velocityの更新
-        if (Grounded(myPosition))
+        Debug.Log("Grounded : " + Grounded(myPosition));
+
+        if (Grounded(myPosition)) //地上
         {
-            // 地上では入力がそのまま移動
+            // velocityの更新
             myVelocity.x = inputX * speed;
             myVelocity.y = 0;
 
-            // ジャンプに関する処理
-            Jump(jumpTriggered, true);
+            Debug.Log("Player grounded");
+
+            jumpcharge.SetValue(Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1));
+
+            if (jumpTriggered)
+            {
+                // 通常のジャンプ
+                Jump(true);
+            }
         }
-        else
+        else //空中
         {
+            // velocityの更新
+
             /*
             // 空中では加速度的な移動
             velocity.x = speed_x * Mathf.Clamp(velocity.x + (input_x * 0.01f), -1, 1);
@@ -76,8 +88,12 @@ public class PlayerMove : MonoBehaviour
 
             myVelocity += gravityForce;
 
-            // 2段ジャンプに関する処理
-            Jump(jumpTriggered, false);
+
+            if (jumpTriggered)
+            {
+                // 2段ジャンプ
+                Jump(false);
+            }
         }
 
         // Playerの移動処理
@@ -100,32 +116,22 @@ public class PlayerMove : MonoBehaviour
             ジャンプをする関数ではなくUpdateの中で動く、ジャンプに関する色々な処理
             grondedがfalseだと2段ジャンプの挙動になります
      */
-    void Jump(bool jumpPressed, bool grounded)
+    void Jump(bool grounded)
     {
-        // jumpChargeを増やす
+        // 通常のジャンプ処理
         if (grounded)
         {
-            jumpcharge.SetValue(Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1));
+            // ジャンプによりjumpChargeを最大0.5だけ消費
+
+            myVelocity += Mathf.Min(jumpcharge.Value, 0.5f) * jumpPower * Vector2.up;
+            jumpcharge.SetValue(Mathf.Max(jumpcharge.Value - 0.5f, 0));
         }
-
-        // ↑が押された時
-        if (jumpPressed)
+        else // 2段ジャンプ
         {
-            // 通常のジャンプ処理
-            if (grounded)
+            if (0.4f < jumpcharge.Value)
             {
-                // ジャンプによりjumpChargeを最大0.5だけ消費
-
-                myVelocity += Mathf.Min(jumpcharge.Value, 0.5f) * jumpPower * Vector2.up;
-                jumpcharge.SetValue(Mathf.Max(jumpcharge.Value - 0.5f, 0));
-            }
-            else // 2段ジャンプ
-            {
-                if (0.4f < jumpcharge.Value)
-                {
-                    myVelocity = 0.5f * jumpPower * Vector2.up;
-                    jumpcharge.SetValue(0);
-                }
+                myVelocity = 0.5f * jumpPower * Vector2.up;
+                jumpcharge.SetValue(0);
             }
         }
     }
@@ -134,10 +140,10 @@ public class PlayerMove : MonoBehaviour
     bool Grounded(Vector2 myPosition)
     {
         // Playerと地面の高さの差
-        float dif = myPosition.y - groundLevel;
+        float playerHight = myPosition.y - adhesCorrect_y;
 
-        // Playerが地面の高さ以下ならfalseを返す
-        float adjust = 0.1f;
-        return dif - adhesCorrect_y < adjust;
+        // Playerが地面の高さ以下ならtrueを返す
+        float adjust = 0.001f;
+        return playerHight - adjust < groundLevel;
     }
 }
