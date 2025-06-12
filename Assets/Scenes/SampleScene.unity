@@ -906,11 +906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1587795ec8c7f36499964f20174573ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Value: 0
-  playerSprite: {fileID: 2044247183}
-  mySprite: {fileID: 1028889680}
-  spriteHeight: 1.9
-  player: {fileID: 2044247182}
 --- !u!1 &1099419035
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,6 +2221,8 @@ GameObject:
   - component: {fileID: 2044247182}
   - component: {fileID: 2044247187}
   - component: {fileID: 2044247188}
+  - component: {fileID: 2044247190}
+  - component: {fileID: 2044247189}
   - component: {fileID: 2044247186}
   - component: {fileID: 2044247185}
   m_Layer: 0
@@ -2252,8 +2249,6 @@ MonoBehaviour:
   swordCircleCol_radius: 1
   attackInterval: 1.5
   invincibleTime: 0.96
-  blinking_alpha: 0.34
-  player_colorAlpha: 1
 --- !u!212 &2044247183
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2322,8 +2317,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1539810773}
   - {fileID: 1028889679}
+  - {fileID: 1539810773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2044247185
@@ -2410,7 +2405,6 @@ MonoBehaviour:
   jumpPower: 1.1
   jumpcharge: {fileID: 1028889681}
   jumpChargeSpeed: 0.017
-  particle_illum: {fileID: 1539810774}
 --- !u!114 &2044247188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2423,15 +2417,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e125fb50b850b34b97039e879609134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputAction:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 75c72a8d-6815-4287-8657-d6951cae3ac0
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  playerInputSystem: {fileID: 2044247190}
+--- !u!114 &2044247189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044247181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d401e03e88135164e85c5219858b86f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSprite: {fileID: 2044247183}
+  jumpChargeSprite: {fileID: 1028889680}
+  spriteHeight: 0
+  jumpCharge: {fileID: 1028889681}
+  particle_illum: {fileID: 1539810774}
+  blinking_alpha: 0
+--- !u!114 &2044247190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044247181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

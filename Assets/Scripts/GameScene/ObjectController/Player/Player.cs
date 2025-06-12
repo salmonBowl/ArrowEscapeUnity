@@ -12,6 +12,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+[RequireComponent(typeof(PlayerMove))]
+[RequireComponent(typeof(PlayerVisual))]
 public class Player : MonoBehaviour
 {
     [SerializeField] PlayerHitpoint playerhp;
@@ -23,19 +25,17 @@ public class Player : MonoBehaviour
     ///<summary>
     ///</summary>
     [SerializeField] float invincibleTime;
-    [SerializeField] float blinking_alpha;
 
     float swordCoolTime;
 
-    float invincible_timeCount = 0;
-    public float player_colorAlpha = 1;
+    public float Invincible_timeCount { get; private set; } = 0;
 
-    PlayerMove mover;
+    readonly PlayerMove mover;
+    readonly PlayerVisual visual;
 
     void Start()
     {
         swordCoolTime = attackInterval;
-        mover = GetComponent<PlayerMove>();
 
         UpdateManager.Instance.OnUpdate += MyUpdate;
     }
@@ -61,11 +61,10 @@ public class Player : MonoBehaviour
 
         // 被弾関係
         // この変数が0になるまで無敵時間が続く
-        invincible_timeCount = Mathf.Max(0, invincible_timeCount - Time.deltaTime);
-        if (invincible_timeCount == 0)
+        Invincible_timeCount = Mathf.Max(0, Invincible_timeCount - Time.deltaTime);
+        if (Invincible_timeCount == 0)
         {
-            StopAllCoroutines();
-            player_colorAlpha = 1;
+            visual.StopBlinking();
         }
     }
 
@@ -110,7 +109,7 @@ public class Player : MonoBehaviour
     // 被弾
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (invincible_timeCount != 0)
+        if (Invincible_timeCount != 0)
         {
             return;
         }
@@ -132,20 +131,8 @@ public class Player : MonoBehaviour
         }
 
         // 被弾して無敵時間ができる
-        invincible_timeCount = invincibleTime;
+        Invincible_timeCount = invincibleTime;
 
-        StartCoroutine(Blink());
-    }
-
-    // 無敵時間の点滅
-    IEnumerator Blink()
-    {
-        while (true)
-        {
-            player_colorAlpha = blinking_alpha;
-            yield return new WaitForSeconds(0.15f);
-            player_colorAlpha = 1;
-            yield return new WaitForSeconds(0.15f);
-        }
+        visual.StopBlinking();
     }
 }
