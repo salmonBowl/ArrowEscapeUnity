@@ -12,7 +12,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(PlayerMove))]
-[RequireComponent(typeof(PlayerVisual))]
+[RequireComponent(typeof(PlayerVisualBlinking))]
 public class Player : MonoBehaviour
 {
     [SerializeField] PlayerHitpoint playerhp;
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public float Invincible_timeCount { get; private set; } = 0;
 
     [SerializeField] PlayerMove mover;
-    [SerializeField] PlayerVisual visual;
+    [SerializeField] PlayerVisualBlinking visual;
 
     void Start()
     {
