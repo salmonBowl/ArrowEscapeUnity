@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
-public class UpdateManager : SingletonBase<UpdateManager>
+public class UpdateManager : MonoBehaviour
 {
     // 色々な条件つきのUpdate
     
@@ -13,6 +15,7 @@ public class UpdateManager : SingletonBase<UpdateManager>
     public event Action OnUpdateWhileGameCredit;
 
     public event Action OnUpdateIfNotTitle;
+
 
     void Update()
     {
@@ -41,5 +44,11 @@ public class UpdateManager : SingletonBase<UpdateManager>
         {
             OnUpdateIfNotTitle?.Invoke();
         }
+    }
+
+    public static UpdateManager Instance { get; private set; }
+    UpdateManager()
+    {
+        Instance = this;
     }
 }
