@@ -15,7 +15,7 @@ using System;
 [RequireComponent(typeof(PlayerVisualBlinking))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] PlayerHitpoint playerhp;
+    [SerializeField] PlayerHealthpoint playerhp;
     [Space(20)]
     [SerializeField] GameObject sword;
     [SerializeField] float swordCircleCol_radius;
@@ -132,6 +132,6 @@ public class Player : MonoBehaviour
         // 被弾して無敵時間ができる
         Invincible_timeCount = invincibleTime;
 
-        visual.StopBlinking();
+        visual.StartBlinking();
     }
 }

@@ -31,6 +31,8 @@ public class PlayerVisualBlinking : MonoBehaviour
     }
     public void SetAlpha(float alpha)
     {
+        //Debug.Log($"PlayerVisualBlinking.SetAlpha({alpha})");
+
         AlphaRatio = alpha;
     }
 }

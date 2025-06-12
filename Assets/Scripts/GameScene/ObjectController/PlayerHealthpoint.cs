@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHitpoint : MonoBehaviour
+public class PlayerHealthpoint : MonoBehaviour
 {
     [HideInInspector] public float HP = 1.0f;
     IBossHealthStatus iBosshp; [SerializeField] SerializeIBossHealthStatus bosshp; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
