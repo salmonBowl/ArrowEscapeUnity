@@ -27,17 +27,8 @@ public class BeamController : MonoBehaviour
 
     void Start()
     {
-        // Beam初期化
-        GameObject bg = GameObject.Find("background");
-        if (bg = null)
-        {
-            Debug.LogError("オブジェクト \"background\" が見つかりません");
-        }
-        else
-        {
-            Background background = bg.GetComponent<Background>();
-            stageWidth = background.Width;
-        }
+        stageWidth = GameObject.Find("background").GetComponent<Background>().Width;
+
         localTime = 0;
         mycollider.enabled = false;
     }
