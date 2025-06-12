@@ -9,7 +9,7 @@ public class PlayerJumpCharge : MonoBehaviour
 
     public void SetValue(float value)
     {
-        Debug.Log($"jumpCharge.SetValue(\"{value}\"");
+        //Debug.Log($"jumpCharge.SetValue(\"{value}\"");
 
         // チャージが完了したらエフェクトを出す
         if (Value < 1 && value == 1)

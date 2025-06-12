@@ -2207,7 +2207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 15
   groundLevel: -7
-  gravity_volume: 0.3
+  gravity_volume: 1.9
 --- !u!1 &2044247181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,9 +2402,9 @@ MonoBehaviour:
   background: {fileID: 1955725546}
   playerWidth: 1.8
   adhesCorrect_y: 0.98
-  speed: 0.3
+  speed: 18
   ratio_airmove: 0.3
-  jumpPower: 1.1
+  jumpPower: 68
   jumpcharge: {fileID: 1028889681}
   jumpChargeSpeed: 0.017
   input: {fileID: 2044247188}
@@ -2435,7 +2435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSprite: {fileID: 2044247183}
   jumpChargeSprite: {fileID: 1028889680}
-  spriteHeight: 0
+  spriteHeight: 1.9
   jumpCharge: {fileID: 1028889681}
   particle_illum: {fileID: 1539810774}
   blinking_alpha: 0
