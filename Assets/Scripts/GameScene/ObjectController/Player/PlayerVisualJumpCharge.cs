@@ -33,41 +33,39 @@ public class PlayerVisualJumpCharge : MonoBehaviour
             RenderAlpha(jumpCharge.Value, blink.AlphaRatio);
         }
     }
-    /// <summary>
-    /// チャージが完了したエフェクトを表示します
-    /// </summary>
 
     void SetFillAmount(float value)
     {
         jumpChargeSprite.size = new Vector2(jumpChargeSprite.size.x, playerSpriteHeight * value);
-        jumpChargeSprite.transform.localPosition -= Vector3.up * (transform.localPosition.y - (playerSpriteHeight * (value - 1) * 0.5f));
+        jumpChargeSprite.transform.localPosition = new Vector2(
+            jumpChargeSprite.transform.localPosition.x,
+            playerSpriteHeight / 2 * (value - 1)
+            );
     }
     void RenderAlpha(float jumpCharge, float alphaRatio)
     {
         float chargeAlpha = jumpCharge == 0 ? 0 : (jumpChargeMaxAlpha * jumpCharge);
 
-        Color playerColor = playerSprite.color;
-        Color chargeColor = jumpChargeSprite.color;
-
-        playerColor.a = alphaRatio * 1;
-        chargeColor.a = alphaRatio * chargeAlpha;
-
-        playerSprite.color = playerColor;
-        jumpChargeSprite.color = chargeColor;
+        playerSprite.color = SpriteSetAlpha(playerSprite, 1 * alphaRatio);
+        jumpChargeSprite.color = SpriteSetAlpha(jumpChargeSprite, chargeAlpha * alphaRatio);
     }
-
-    void DispParticle()
+    Color SpriteSetAlpha(SpriteRenderer sprite, float alpha)
     {
-        particle_illum.color = new Color(1, 1, 1, 1);
+        Color color = sprite.color;
+        color.a = alpha;
+        return color;
     }
-
 
     // Update内でパーティクルを減衰
     void AttenuateParticle()
     {
         float illumdecrease = 0.05f;
-        Color pcolor = particle_illum.color;
-        particle_illum.color += new Color(0, 0, 0, Mathf.Max(illumdecrease - pcolor.a, 0) - illumdecrease);
-
+        Color particleColor = particle_illum.color;
+        particleColor.a = Mathf.Max(particleColor.a - illumdecrease, 0);
+        particle_illum.color = particleColor;
+    }
+    void DispParticle()
+    {
+        particle_illum.color = new Color(1, 1, 1, 1);
     }
 }

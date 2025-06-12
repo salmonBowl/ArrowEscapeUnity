@@ -924,7 +924,7 @@ MonoBehaviour:
   playerSprite: {fileID: 2044247183}
   playerSpriteHeight: 1.9
   jumpChargeSprite: {fileID: 1028889680}
-  jumpChargeMaxAlpha: 0.7
+  jumpChargeMaxAlpha: 0.8
   particle_illum: {fileID: 1539810774}
 --- !u!1 &1099419035
 GameObject:
@@ -2456,7 +2456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d401e03e88135164e85c5219858b86f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowestAlpha: 0.4
+  lowestAlpha: 0.3
   blinkInterval: 0.15
 --- !u!114 &2044247190
 MonoBehaviour:
