@@ -98,7 +98,7 @@ public class PlayerMove : MonoBehaviour
 
         // Playerの移動処理
 
-        update_position += myVelocity;
+        update_position += myVelocity * Time.deltaTime;
         // 位置補正
         // 画面外に行くならxを補正
         float moverange_half = (stageWidth - playerWidth) / 2;
