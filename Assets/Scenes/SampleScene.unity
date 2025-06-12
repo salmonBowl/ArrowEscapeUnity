@@ -1495,6 +1495,7 @@ GameObject:
   - component: {fileID: 1638939283}
   - component: {fileID: 1638939285}
   - component: {fileID: 1638939286}
+  - component: {fileID: 1638939287}
   m_Layer: 0
   m_Name: Director
   m_TagString: Untagged
@@ -1514,7 +1515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c7ac78be5fcf44eb9d1fed579ae612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
+  stage: {fileID: 1955725546}
   Arrow: {fileID: 8469354205498174539, guid: 49c60f98519bac64594a9d4e396919e4, type: 3}
   ArrowBom: {fileID: 7944602320367056975, guid: e683089e0b0d3c040a9cfd6f7a867c66, type: 3}
   Player: {fileID: 2044247181}
@@ -1562,7 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed664b576e1253408ed24dfe36474cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background: {fileID: 0}
+  background: {fileID: 1955725546}
   Confetti: {fileID: 6377313773574984123, guid: b47542c491b61e249bf63740ac6bba81, type: 3}
   Arrow: {fileID: 8469354205498174539, guid: 49c60f98519bac64594a9d4e396919e4, type: 3}
   playerhp: {fileID: 1844454353}
@@ -1570,6 +1571,18 @@ MonoBehaviour:
   confetti_maxInterval: 5
   confetti_timeToMax: 10
   generateHight: 8
+--- !u!114 &1638939287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638939282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3b342043a8fc942adfb0d874b64a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1677286881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,10 +1971,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baae9dbd8be8536468e0f6c1042d2f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
-  hpGauge: {fileID: 1901834176}
+  gauge_fill: {fileID: 1901834176}
   gauge_backGround: {fileID: 899288902}
-  HP: 0
+  damageAmount: 0.09
 --- !u!114 &1901834176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2213,6 +2225,7 @@ GameObject:
   - component: {fileID: 2044247183}
   - component: {fileID: 2044247182}
   - component: {fileID: 2044247187}
+  - component: {fileID: 2044247188}
   - component: {fileID: 2044247186}
   - component: {fileID: 2044247185}
   m_Layer: 0
@@ -2398,6 +2411,27 @@ MonoBehaviour:
   jumpcharge: {fileID: 1028889681}
   jumpChargeSpeed: 0.017
   particle_illum: {fileID: 1539810774}
+--- !u!114 &2044247188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044247181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e125fb50b850b34b97039e879609134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputAction:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 75c72a8d-6815-4287-8657-d6951cae3ac0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

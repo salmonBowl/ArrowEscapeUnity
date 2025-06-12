@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField, Header("Backgroundから情報を取得します")]
@@ -37,15 +38,13 @@ public class PlayerMove : MonoBehaviour
 
     Vector2 myVelocity = new();
 
-    PlayerInput input;
+    private readonly PlayerInput input;
 
-    void Start()
+    void Awake()
     {
         stageWidth = background.Width;
         groundLevel = background.GroundLevel;
         gravityForce = background.GravityForce;
-
-        input = GetComponent<PlayerInput>();
     }
 
     // プレイヤーの座標に関する処理をまとめた
@@ -59,7 +58,7 @@ public class PlayerMove : MonoBehaviour
 
         input.ReadInput();
         float inputX = input.X;
-        bool jumpPressed = input.JumpPressed;
+        bool jumpTriggered = input.JumpTriggered;
 
         // 更新前と更新後のPlayerの座標
         Vector2 myPosition = transform.position;
@@ -73,7 +72,7 @@ public class PlayerMove : MonoBehaviour
             myVelocity.y = 0;
 
             // ジャンプに関する処理
-            Jump(jumpPressed, true);
+            Jump(jumpTriggered, true);
         }
         else
         {
@@ -87,7 +86,7 @@ public class PlayerMove : MonoBehaviour
             myVelocity += gravityForce;
 
             // 2段ジャンプに関する処理
-            Jump(jumpPressed, false);
+            Jump(jumpTriggered, false);
         }
 
         // Playerの移動処理
