@@ -3,10 +3,6 @@
         Playerを動かします
 
         処理
-        ・カーソルキー入力を取得
-        ・移動
-        ・ジャンプ、2段ジャンプ
-        ・重力で落下
         ・jumpChargeに合わせてプレイヤーの色を変える
         ・jumpChargeが溜まったらエフェクトを出す
         ・swordを取ってボスに攻撃
@@ -34,8 +30,6 @@ public class Player : MonoBehaviour
     float invincible_timeCount = 0;
     public float player_colorAlpha = 1;
 
-    public static event Action OnAttacked;
-
     PlayerMove mover;
 
     void Start()
@@ -60,7 +54,10 @@ public class Player : MonoBehaviour
                 sword.SetActive(true);
             }
         }
-        AttackOnSword();
+        if (GetSword())
+        {
+            AttackOnSword();
+        }
 
         // 被弾関係
         // この変数が0になるまで無敵時間が続く
@@ -75,28 +72,25 @@ public class Player : MonoBehaviour
     // swordを取ったらボスに攻撃
     void AttackOnSword()
     {
-        if (GetSword())
+        // swordに触れた瞬間を処理したい
+        if (sword.activeSelf == false)
         {
-            // swordに触れた瞬間を処理したい
-            if (sword.activeSelf == false)
-            {
-                
-                return;
-            }
 
-            if (GamePhase.Instance().IsTitle)
-            {
-                EventManager.Instance().Event("GameStart");
-            }
-            else
-            {
-                OnAttacked?.Invoke();
-            }
-
-            sword.SetActive(false);
-
-            swordCoolTime = attackInterval;
+            return;
         }
+
+        if (GamePhase.Instance().IsTitle)
+        {
+            EventManager.Instance().Event("GameStart");
+        }
+        else
+        {
+            PlayerEventManager.Instance().Event("Attacked");
+        }
+
+        sword.SetActive(false);
+
+        swordCoolTime = attackInterval;
     }
 
     // swordに当たっているかどうかを返す

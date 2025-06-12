@@ -24,13 +24,10 @@ public class PlayerMove : MonoBehaviour
     float jumpPower;
 
     [SerializeField, Header("ジャンプ力に関するクラスです")]
-    JumpCharge jumpcharge;
+    PlayerJumpCharge jumpcharge;
 
     [SerializeField, Header("")]
     float jumpChargeSpeed;
-
-    [Space(20)]
-    [SerializeField] SpriteRenderer particle_illum;
 
     private float stageWidth;
     private float groundLevel;
@@ -50,12 +47,6 @@ public class PlayerMove : MonoBehaviour
     // プレイヤーの座標に関する処理をまとめた
     public void MoveUpdate()
     {
-        // パーティクルを減衰
-        float illumdecrease = 0.05f;
-        Color pcolor = particle_illum.color;
-        particle_illum.color -= new Color(0, 0, 0, illumdecrease + Mathf.Min(0, pcolor.a - illumdecrease));
-
-
         input.ReadInput();
         float inputX = input.X;
         bool jumpTriggered = input.JumpTriggered;
@@ -111,17 +102,10 @@ public class PlayerMove : MonoBehaviour
      */
     void Jump(bool jumpPressed, bool grounded)
     {
-        // jumpCharge
+        // jumpChargeを増やす
         if (grounded)
         {
-            float old_jumpCharge = jumpcharge.Value;
-            jumpcharge.Value = Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1);
-
-            // チャージが完了したらエフェクトを出す
-            if (old_jumpCharge < 1 && jumpcharge.Value == 1)
-            {
-                particle_illum.color = new Color(1, 1, 1, 1);
-            }
+            jumpcharge.SetValue(Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1));
         }
 
         // ↑が押された時
@@ -133,14 +117,14 @@ public class PlayerMove : MonoBehaviour
                 // ジャンプによりjumpChargeを最大0.5だけ消費
 
                 myVelocity += Mathf.Min(jumpcharge.Value, 0.5f) * jumpPower * Vector2.up;
-                jumpcharge.Value -= Mathf.Min(jumpcharge.Value, 0.5f);
+                jumpcharge.SetValue(Mathf.Max(jumpcharge.Value - 0.5f, 0));
             }
             else // 2段ジャンプ
             {
                 if (0.4f < jumpcharge.Value)
                 {
                     myVelocity = 0.5f * jumpPower * Vector2.up;
-                    jumpcharge.Value = 0;
+                    jumpcharge.SetValue(0);
                 }
             }
         }

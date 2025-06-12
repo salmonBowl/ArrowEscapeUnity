@@ -33,7 +33,7 @@ public class BossHealthPoint : MonoBehaviour, IBossHealthStatus
 
         UpdateManager.Instance.OnUpdateIfNotTitle += UpdateIfNotTitle;
 
-        Player.OnAttacked += Attack;
+        PlayerEventManager.Instance().OnAttacked += Attack;
         EventManager.Instance().OnRetry += OnRetryGame;
     }
 
