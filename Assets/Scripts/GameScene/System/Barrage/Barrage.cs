@@ -41,9 +41,9 @@ public class Barrage : MonoBehaviour
             new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0, true),
             new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 0, false),
             new PatternEmissionArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0),
-            new PatternBeam(beamGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 1, () => Fixed_Probability(13)),
-            new PatternArrowBom(arrowGenerator, () => bosshp.HealthPoint < 0.4f, () => Fixed_Probability(140), 2),
-            new PatternSingleArrow(arrowGenerator, () => bosshp.HealthPoint < 0.2f, () => Fixed_Probability(50), 3),
+            new PatternBeam(beamGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), CoolTimeID.Slot1, () => Fixed_Probability(13)),
+            new PatternArrowBom(arrowGenerator, () => bosshp.HealthPoint < 0.4f, () => Fixed_Probability(140), CoolTimeID.Slot2),
+            new PatternSingleArrow(arrowGenerator, () => bosshp.HealthPoint < 0.2f, () => Fixed_Probability(50), CoolTimeID.Slot3),
         };
 
         Application.targetFrameRate = 60;

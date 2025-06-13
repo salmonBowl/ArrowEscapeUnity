@@ -6,9 +6,9 @@ public class PatternBeam : AttackPatternBase
     readonly BeamGenerator beamGenerator;
     readonly Func<bool> randomJudgeMoreover;
 
-    public PatternBeam(BeamGenerator beamGenerator, Func<bool> executeCondition, Func<bool> randomJudge, int waitTimeIndex, Func<bool> randomJudgeMoreover)
+    public PatternBeam(BeamGenerator beamGenerator, Func<bool> executeCondition, Func<bool> randomJudge, CoolTimeID coolTimeID, Func<bool> randomJudgeMoreover)
     {
-        Init(executeCondition, randomJudge, waitTimeIndex);
+        Init(executeCondition, randomJudge, coolTimeID);
 
         this.beamGenerator = beamGenerator;
         this.randomJudgeMoreover = randomJudgeMoreover;
@@ -18,7 +18,7 @@ public class PatternBeam : AttackPatternBase
     {
         if (executeCondition() == false) return;
 
-        if (waitTimes[waitTimeIndex] != 0) return;
+        if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -45,7 +45,7 @@ public class PatternBeam : AttackPatternBase
                 beamGenerator.GenerateBeam(beamhight2);
             }
 
-            waitTimes[waitTimeIndex] = 5f;
+            waitTimes[(int)coolTimeID] = 5f;
         }
     }
 }

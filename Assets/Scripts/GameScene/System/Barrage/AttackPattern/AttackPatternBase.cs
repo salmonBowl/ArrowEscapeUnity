@@ -3,15 +3,22 @@ using System.Collections.Generic;
 
 public abstract class AttackPatternBase
 {
+    protected AttackPatternConfig config;
+
     protected Func<bool> executeCondition;
     protected Func<bool> randomJudge;
-    protected int waitTimeIndex;
+    protected CoolTimeID coolTimeID;
 
-    protected void Init(Func<bool> executeCondition, Func<bool> randomJudge, int waitTimeIndex)
+    public AttackPatternBase(AttackPatternConfig config)
+    {
+        this.config = config;
+    }
+
+    protected void Init(Func<bool> executeCondition, Func<bool> randomJudge, CoolTimeID coolTimeID)
     {
         this.executeCondition = executeCondition;
         this.randomJudge = randomJudge;
-        this.waitTimeIndex = waitTimeIndex;
+        this.coolTimeID = coolTimeID;
     }
     public abstract void Execute(List<float> waitTimes);
 }

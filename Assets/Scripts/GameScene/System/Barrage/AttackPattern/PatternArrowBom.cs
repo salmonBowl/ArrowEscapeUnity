@@ -5,9 +5,9 @@ public class PatternArrowBom : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> executeCondition, Func<bool> randomJudge, int waitTimeIndex)
+    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> executeCondition, Func<bool> randomJudge, CoolTimeID coolTimeID)
     {
-        Init(executeCondition, randomJudge, waitTimeIndex);
+        Init(executeCondition, randomJudge, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
     }
@@ -16,7 +16,7 @@ public class PatternArrowBom : AttackPatternBase
     {
         if (executeCondition() == false) return;
 
-        if (waitTimes[waitTimeIndex] != 0) return;
+        if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -25,7 +25,7 @@ public class PatternArrowBom : AttackPatternBase
             float half_genRange = arrowGenerator.stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
             arrowGenerator.GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
 
-            waitTimes[waitTimeIndex] = 5f;
+            waitTimes[(int)coolTimeID] = 5f;
         }
     }
 }
