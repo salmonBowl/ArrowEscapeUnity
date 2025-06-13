@@ -16,7 +16,9 @@ public class PlayerJumpChargeCompleted : MonoBehaviour
     {
         float illumdecrease = 0.05f;
         Color particleColor = particle_illum.color;
+
         particleColor.a = Mathf.Max(particleColor.a - illumdecrease, 0);
+
         particle_illum.color = particleColor;
     }
     void DispParticle()

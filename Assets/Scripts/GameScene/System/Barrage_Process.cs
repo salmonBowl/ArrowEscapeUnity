@@ -113,7 +113,7 @@ public class Barrage_Process : ArrowGenerator
             if (Fixed_Probability(80))
             {
                 // ビームの生成
-                List<float> beamhight_candidate = new() { -6f, -6f, -3f, 0 };
+                List<float> beamhight_candidate = new() { -6f, -6f, -3f, -3f, 0 };
                 float beamhight1 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
                 beam.GenerateBeam(beamhight1);
 
@@ -146,8 +146,8 @@ public class Barrage_Process : ArrowGenerator
             if (Fixed_Probability(80))
             {
                 // Player方向に5個のArrow
-                int quantity = 5;
-                float anglerange = 1.5f; // 0～2π
+                int quantity = 7;
+                float anglerange = 2.1f; // 0～2π
                     // プレイヤーの向きからランダムな角度に回す時に(-range/2, range/2)で計算する
 
                 // 生成する範囲の調整
