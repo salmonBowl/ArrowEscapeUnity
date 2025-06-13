@@ -92,30 +92,6 @@ public class Barrage : MonoBehaviour
         return false;
     }
 
-    /*
-        1/80の確率でパターン1の生成、また1.5秒のクールタイムがある
-     */
-    void Parallel5Arrow(bool center)
-    {
-        // 1/80の確率でパターン1の生成
-        if (waitTime[0] == 0)
-        {
-            if (Fixed_Probability(80))
-            {
-                // 5個のArrowを0.9の間隔で
-                int quantity = 5;
-                float arrowGap = 0.9f;
-
-                // 生成する範囲の調整
-                float halfGenRange = ((center ? 0 : arrowGenerator.stageWidth) - (arrowGap * quantity)) / 2;
-
-                float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
-                arrowGenerator.GeneratePattern01(genPosX, quantity, arrowGap);
-
-                waitTime[0] = 1.5f;
-            }
-        }
-    }
     void Beam()
     {
         // 1/80の確率でパターン2の生成
