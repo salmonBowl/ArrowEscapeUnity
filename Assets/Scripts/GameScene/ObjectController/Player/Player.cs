@@ -12,25 +12,18 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(PlayerMove))]
-[RequireComponent(typeof(PlayerVisualBlinking))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] PlayerHealthpoint playerhp;
+    [Header("依存関係")]
+    [SerializeField] PlayerMove mover;
+
     [Space(20)]
+
     [SerializeField] GameObject sword;
     [SerializeField] float swordCircleCol_radius;
     [SerializeField] float attackInterval;
-    [Space(20)]
-    ///<summary>
-    ///</summary>
-    [SerializeField] float invincibleTime;
 
     float swordCoolTime;
-
-    public float Invincible_timeCount { get; private set; } = 0;
-
-    [SerializeField] PlayerMove mover;
-    [SerializeField] PlayerVisualBlinking visual;
 
     void Start()
     {
@@ -56,14 +49,6 @@ public class Player : MonoBehaviour
         if (GetSword())
         {
             AttackOnSword();
-        }
-
-        // 被弾関係
-        // この変数が0になるまで無敵時間が続く
-        Invincible_timeCount = Mathf.Max(0, Invincible_timeCount - Time.deltaTime);
-        if (Invincible_timeCount == 0)
-        {
-            visual.StopBlinking();
         }
     }
 
@@ -103,35 +88,5 @@ public class Player : MonoBehaviour
         float distance = Mathf.Sqrt(dif.x * dif.x + dif.y * dif.y);
 
         return distance < radius_player + radius_sword;
-    }
-
-    // 被弾
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (Invincible_timeCount != 0)
-        {
-            return;
-        }
-        // 無敵時間がない時
-
-        // collisionのtagがこの中にあれば下の処理を実行
-        string colTag = collision.gameObject.tag;
-        string[] tags = { "Arrow", "Beam", "Bom" };
-
-        int index = Array.IndexOf(tags, colTag);
-
-        if (index == -1)
-        {
-            return;
-        }
-        if (colTag == tags[index])
-        {
-            playerhp.Damage(index);
-        }
-
-        // 被弾して無敵時間ができる
-        Invincible_timeCount = invincibleTime;
-
-        visual.StartBlinking();
     }
 }
