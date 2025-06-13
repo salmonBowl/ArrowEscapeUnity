@@ -20,8 +20,10 @@ public class Barrage : MonoBehaviour
 
     [Space(20)]
 
-    [SerializeField, Header("依存関係")]
-    IBossHealthStatus bosshp; readonly SerializeIBossHealthStatus iBossHelthStatus; [Serializable] private class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+    [Header("依存関係")]
+
+    IBossHealthStatus bosshp;
+    [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
 
     [Space(20)]
 
@@ -32,13 +34,14 @@ public class Barrage : MonoBehaviour
 
     void Start()
     {
-        bosshp = iBossHelthStatus.Interface();
+        bosshp = iBossHealthStatus.Interface();
 
         patterns = new()
         {
             new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0, true),
             new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 0, false),
             new PatternEmissionArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0),
+            new PatternBeam(beamGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 1, () => Fixed_Probability(13)),
         };
 
         Application.targetFrameRate = 60;
@@ -60,11 +63,6 @@ public class Barrage : MonoBehaviour
             pattern.Execute(waitTimes);
         }
 
-        if (bosshp.HealthPoint < 0.75f)
-        {
-            // ビームが打たれる攻撃
-            Beam();
-        }
         if (bosshp.HealthPoint < 0.4f)
         {
             // Arrow爆弾が投下される
@@ -91,39 +89,6 @@ public class Barrage : MonoBehaviour
         return false;
     }
 
-    void Beam()
-    {
-        // 1/80の確率でパターン2の生成
-        if (waitTimes[1] == 0)
-        {
-            if (Fixed_Probability(80))
-            {
-                // ビームの生成
-                List<float> beamhight_candidate = new() { -6f, -6f, -3f, -3f, 0 };
-                float beamhight1 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
-                beamGenerator.GenerateBeam(beamhight1);
-
-                // 運が悪いともう一本打たれる仕組み
-                if (Fixed_Probability(13))
-                {
-                    // リストからbeam1の高さを削除
-                    foreach (float h in beamhight_candidate.ToArray())
-                    {
-                        if (h == beamhight1)
-                        {
-                            beamhight_candidate.Remove(h);
-                        }
-                    }
-
-                    // ビーム2の生成
-                    float beamhight2 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
-                    beamGenerator.GenerateBeam(beamhight2);
-                }
-
-                waitTimes[1] = 5f;
-            }
-        }
-    }
     void ArrowBom()
     {
         // 1/140の確率でパターン2の生成
