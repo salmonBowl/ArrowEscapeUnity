@@ -19,14 +19,14 @@ public class PatternPallarelArrow : AttackPatternBase
      */
     public override void Execute(List<float> waitTimes)
     {
-        if (waitTimes[(int)coolTimeID] != 0) return;
+        if (waitTimes[0] != 0) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
         {
-            // 5個のArrowを0.9の間隔で
-            int quantity = 7;
-            float arrowGap = 0.9f;
+            // 5個のArrowを1.5の間隔で
+            int quantity = 5;
+            float arrowGap = 3.8f;
 
             // 生成する範囲の調整
             float halfGenRange = ((center ? 0 : arrowGenerator.stageWidth) - (arrowGap * quantity)) / 2;
@@ -34,7 +34,7 @@ public class PatternPallarelArrow : AttackPatternBase
             float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
             arrowGenerator.GeneratePattern01(genPosX, quantity, arrowGap);
 
-            waitTimes[(int)coolTimeID] = 1.5f;
+            waitTimes[0] = 1.5f;
         }
     }
 }

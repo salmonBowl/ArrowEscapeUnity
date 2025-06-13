@@ -1530,6 +1530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1638939284}
   - component: {fileID: 1638939283}
+  - component: {fileID: 1638939288}
   - component: {fileID: 1638939287}
   - component: {fileID: 1638939285}
   - component: {fileID: 1638939286}
@@ -1552,8 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1c7ac78be5fcf44eb9d1fed579ae612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowGenerator: {fileID: 1638939287}
-  beamGenerator: {fileID: 1638939285}
+  factory: {fileID: 1638939288}
   iBossHealthStatus:
     gameObjectContainInterface: {fileID: 1901834173}
 --- !u!4 &1638939284
@@ -1627,6 +1627,20 @@ MonoBehaviour:
   Player: {fileID: 2044247181}
   generateHeight: 8
   stageWidth: 0
+--- !u!114 &1638939288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638939282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ced0a761a660da47840eecd835373c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowGenerator: {fileID: 1638939287}
+  beamGenerator: {fileID: 1638939285}
 --- !u!1 &1677286881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2468,7 @@ MonoBehaviour:
   ratio_airmove: 0.3
   jumpPower: 68
   jumpcharge: {fileID: 1028889681}
-  jumpChargeSpeed: 0.017
+  jumpChargeSpeed: 0.008
   input: {fileID: 2044247188}
 --- !u!114 &2044247188
 MonoBehaviour:

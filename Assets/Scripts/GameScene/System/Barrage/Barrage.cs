@@ -20,26 +20,21 @@ public class Barrage : MonoBehaviour
 
     IBossHealthStatus bosshp; [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
 
-    [Space(20)]
-
-    List<AttackPatternBase> patterns;
-
-    // 時間経過で減っていく変数。複数個必要になりそうなのでリストに
+    // 時間経過で減っていく変数。複数個必要になりそうなので配列、Linqで操作するのでリストに
     List<float> waitTimes;
+
+    AttackPatternBase pallarelArrow1, pallarelArrow2, emissionArrow, beam, arrowBom, singleArrow;
 
     void Start()
     {
         bosshp = iBossHealthStatus.Interface();
 
-        patterns = new()
-        {
-            factory.Create(PatternType.PallarelArrow_Center),
-            factory.Create(PatternType.PallarelArrow_Normal),
-            factory.Create(PatternType.EmissionArrow),
-            factory.Create(PatternType.Beam),
-            factory.Create(PatternType.ArrowBom),
-            factory.Create(PatternType.SingleArrow),
-        };
+        pallarelArrow1 = factory.Create(PatternType.PallarelArrow_Center);
+        pallarelArrow2 = factory.Create(PatternType.PallarelArrow_Normal);
+        emissionArrow = factory.Create(PatternType.EmissionArrow);
+        beam = factory.Create(PatternType.Beam);
+        arrowBom = factory.Create(PatternType.ArrowBom);
+        singleArrow = factory.Create(PatternType.SingleArrow);
 
         Application.targetFrameRate = 60;
 
@@ -55,33 +50,29 @@ public class Barrage : MonoBehaviour
         waitTimes = waitTimes.Select(x => Mathf.Max(0, x - Time.deltaTime))
                            .ToList();
 
-        foreach (var pattern in patterns)
-        {
-            pattern.Execute(waitTimes);
-        }
         if (bosshp.HealthPoint < 1)
         {
             // 並んだArrowが降ってくる攻撃
-            patterns[0].Execute(waitTimes);
+            pallarelArrow1.Execute(waitTimes);
             // プレイヤーに向けたArrowの攻撃
-            patterns[2].Execute(waitTimes);
+            emissionArrow.Execute(waitTimes);
         }
         if (bosshp.HealthPoint < 0.75f)
         {
             // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
-            patterns[1].Execute(waitTimes);
+            pallarelArrow2.Execute(waitTimes);
             // ビームが打たれる攻撃
-            patterns[3].Execute(waitTimes);
+            beam.Execute(waitTimes);
         }
         if (bosshp.HealthPoint < 0.4f)
         {
             // Arrow爆弾が投下される
-            patterns[4].Execute(waitTimes);
+            arrowBom.Execute(waitTimes);
         }
         if (bosshp.HealthPoint < 0.2f)
         {
             // 普通のArrow
-            patterns[5].Execute(waitTimes);
+            singleArrow.Execute(waitTimes);
         }
     }
 }

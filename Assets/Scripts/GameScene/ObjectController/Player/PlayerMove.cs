@@ -67,7 +67,14 @@ public class PlayerMove : MonoBehaviour
 
             //Debug.Log("Player grounded");
 
-            jumpcharge.SetValue(Mathf.Min(jumpcharge.Value + jumpChargeSpeed, 1));
+            jumpcharge.SetValue(Mathf.Clamp01(IncreaseJumpCharge(jumpcharge.Value)));
+
+            float IncreaseJumpCharge(float value)
+            {
+                float adjust = 0.05f;
+                float increaseDelta = (jumpChargeSpeed * (1 - adjust)) + ((1 - value) * adjust);
+                return value + increaseDelta;
+            }
 
             if (jumpTriggered)
             {
