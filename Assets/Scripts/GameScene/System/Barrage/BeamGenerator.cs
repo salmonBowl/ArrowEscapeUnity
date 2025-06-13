@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BeamGenerator : MonoBehaviour
+public class BeamGenerator : MonoBehaviour, IAttackGeneratable
 {
     [SerializeField] GameObject Beam;
     [SerializeField] float graceTime;

@@ -7,7 +7,7 @@
  */
 using UnityEngine;
 
-public class ArrowGenerator : MonoBehaviour
+public class ArrowGenerator : MonoBehaviour, IAttackGeneratable
 {
     [Header("他スクリプトからの情報取得用")]
     [SerializeField] 

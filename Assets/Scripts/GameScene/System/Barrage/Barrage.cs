@@ -12,10 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-interface IAttackPattern
-{
-    void Execute();
-}
+public interface IAttackGeneratable { }
+
 public class Barrage : MonoBehaviour
 {
     [Header("以下の攻撃パターンを使います")]
@@ -25,44 +23,47 @@ public class Barrage : MonoBehaviour
     [Space(20)]
 
     [SerializeField, Header("依存関係")]
-    SerializeIBossHealthStatus iBossHelthStatus; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+    IBossHealthStatus bosshp; readonly SerializeIBossHealthStatus iBossHelthStatus; [Serializable] private class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
 
     [Space(20)]
 
-    IBossHealthStatus bosshp;
+    List<AttackPatternBase> patterns;
 
     // 時間経過で減っていく変数。複数個必要になりそうなのでリストに
-    List<float> waitTime;
+    List<float> waitTimes;
 
     void Start()
     {
         bosshp = iBossHelthStatus.Interface();
 
+        patterns = new()
+        {
+            new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0, true),
+            new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 0, false),
+            new PatternEmissionArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0),
+        };
+
         Application.targetFrameRate = 60;
 
         // Listの初期化
-        waitTime = Enumerable.Repeat(0.0f, 3).ToList();
+        waitTimes = Enumerable.Repeat(0.0f, 3).ToList();
 
         UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
     }
 
     void UpdateWhileGame()
     {
-        // waitTime[]をカウントダウン
-        waitTime = waitTime.Select(x => Mathf.Max(0, x - Time.deltaTime))
+        // waitTimes[]をカウントダウン
+        waitTimes = waitTimes.Select(x => Mathf.Max(0, x - Time.deltaTime))
                            .ToList();
 
-        if (bosshp.HealthPoint < 1)
+        foreach (var pattern in patterns)
         {
-            // 並んだArrowが降ってくる攻撃
-            Parallel5Arrow(true);
-            // Playerに向けたArrowの攻撃
-            Emission5Arrow();
+            pattern.Execute(waitTimes);
         }
+
         if (bosshp.HealthPoint < 0.75f)
         {
-            // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
-            Parallel5Arrow(false);
             // ビームが打たれる攻撃
             Beam();
         }
@@ -95,7 +96,7 @@ public class Barrage : MonoBehaviour
     void Beam()
     {
         // 1/80の確率でパターン2の生成
-        if (waitTime[1] == 0)
+        if (waitTimes[1] == 0)
         {
             if (Fixed_Probability(80))
             {
@@ -121,35 +122,14 @@ public class Barrage : MonoBehaviour
                     beamGenerator.GenerateBeam(beamhight2);
                 }
 
-                waitTime[1] = 5f;
-            }
-        }
-    }
-    void Emission5Arrow()
-    {
-        // 1/80の確率でパターン2の生成
-        if (waitTime[0] == 0)
-        {
-            if (Fixed_Probability(80))
-            {
-                // Player方向に5個のArrow
-                int quantity = 7;
-                float anglerange = 2.1f; // 0～2π
-                    // プレイヤーの向きからランダムな角度に回す時に(-range/2, range/2)で計算する
-
-                // 生成する範囲の調整
-                float half_genRange = arrowGenerator.stageWidth / 2;
-                arrowGenerator.GeneratePattern02(UnityEngine.Random.Range(-half_genRange, half_genRange), quantity, anglerange);
-
-                waitTime[0] = 1.5f;
-                waitTime[1] = 1.5f;
+                waitTimes[1] = 5f;
             }
         }
     }
     void ArrowBom()
     {
         // 1/140の確率でパターン2の生成
-        if (waitTime[2] == 0)
+        if (waitTimes[2] == 0)
         {
             if (Fixed_Probability(140))
             {
@@ -157,7 +137,7 @@ public class Barrage : MonoBehaviour
                 float half_genRange = arrowGenerator.stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
                 arrowGenerator.GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
 
-                waitTime[2] = 5f;
+                waitTimes[2] = 5f;
             }
         }
     }
