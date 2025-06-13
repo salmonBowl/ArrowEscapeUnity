@@ -12,10 +12,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Barrage_Process : ArrowGenerator
+public class Barrage : MonoBehaviour
 {
-    [SerializeField] SerializeIBossHealthStatus iBossHelthStatus; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
-    [SerializeField] BeamGenerator beam;
+    [Header("以下の攻撃パターンを使います")]
+    [SerializeField] ArrowGenerator arrowGenerator;
+    [SerializeField] BeamGenerator beamGenerator;
+
+    [Space(20)]
+
+    [SerializeField, Header("依存関係")]
+    SerializeIBossHealthStatus iBossHelthStatus; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+
+    [Space(20)]
+
     IBossHealthStatus bosshp;
 
     // 時間経過で減っていく変数。複数個必要になりそうなのでリストに
@@ -29,8 +38,6 @@ public class Barrage_Process : ArrowGenerator
 
         // Listの初期化
         waitTime = Enumerable.Repeat(0.0f, 3).ToList();
-
-        stageWidth = stage.Width;
 
         UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
     }
@@ -96,10 +103,10 @@ public class Barrage_Process : ArrowGenerator
                 float arrowGap = 0.9f;
 
                 // 生成する範囲の調整
-                float halfGenRange = ((center ? 0 : stageWidth) - (arrowGap * quantity)) / 2;
+                float halfGenRange = ((center ? 0 : arrowGenerator.stageWidth) - (arrowGap * quantity)) / 2;
 
                 float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
-                GeneratePattern01(genPosX, quantity, arrowGap);
+                arrowGenerator.GeneratePattern01(genPosX, quantity, arrowGap);
 
                 waitTime[0] = 1.5f;
             }
@@ -115,7 +122,7 @@ public class Barrage_Process : ArrowGenerator
                 // ビームの生成
                 List<float> beamhight_candidate = new() { -6f, -6f, -3f, -3f, 0 };
                 float beamhight1 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
-                beam.GenerateBeam(beamhight1);
+                beamGenerator.GenerateBeam(beamhight1);
 
                 // 運が悪いともう一本打たれる仕組み
                 if (Fixed_Probability(13))
@@ -131,7 +138,7 @@ public class Barrage_Process : ArrowGenerator
 
                     // ビーム2の生成
                     float beamhight2 = beamhight_candidate[UnityEngine.Random.Range(0, beamhight_candidate.Count)];
-                    beam.GenerateBeam(beamhight2);
+                    beamGenerator.GenerateBeam(beamhight2);
                 }
 
                 waitTime[1] = 5f;
@@ -151,8 +158,8 @@ public class Barrage_Process : ArrowGenerator
                     // プレイヤーの向きからランダムな角度に回す時に(-range/2, range/2)で計算する
 
                 // 生成する範囲の調整
-                float half_genRange = stageWidth / 2;
-                GeneratePattern02(UnityEngine.Random.Range(-half_genRange, half_genRange), quantity, anglerange);
+                float half_genRange = arrowGenerator.stageWidth / 2;
+                arrowGenerator.GeneratePattern02(UnityEngine.Random.Range(-half_genRange, half_genRange), quantity, anglerange);
 
                 waitTime[0] = 1.5f;
                 waitTime[1] = 1.5f;
@@ -167,8 +174,8 @@ public class Barrage_Process : ArrowGenerator
             if (Fixed_Probability(140))
             {
                 // 生成する範囲の調整
-                float half_genRange = stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
-                GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
+                float half_genRange = arrowGenerator.stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
+                arrowGenerator.GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
 
                 waitTime[2] = 5f;
             }
@@ -180,8 +187,8 @@ public class Barrage_Process : ArrowGenerator
         if (Fixed_Probability(50))
         {
             // 生成する範囲の調整
-            float half_genRange = stageWidth / 2;
-            GeneratePattern01(UnityEngine.Random.Range(-half_genRange, half_genRange), 1, 0);
+            float half_genRange = arrowGenerator.stageWidth / 2;
+            arrowGenerator.GeneratePattern01(UnityEngine.Random.Range(-half_genRange, half_genRange), 1, 0);
         }
     }
 }

@@ -11,7 +11,7 @@ public class ArrowGenerator : MonoBehaviour
 {
     [Header("他スクリプトからの情報取得用")]
     [SerializeField] 
-    protected Background stage;
+    protected Background background;
     [Space(20)]
     [SerializeField] GameObject Arrow;
     [SerializeField] GameObject ArrowBom;
@@ -22,7 +22,7 @@ public class ArrowGenerator : MonoBehaviour
 
     void Start()
     {
-        stageWidth = stage.Width;
+        stageWidth = background.Width;
     }
 
     // x座標の指定のみでArrowを生成する関数
