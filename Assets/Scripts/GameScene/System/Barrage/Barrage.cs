@@ -12,8 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public interface IAttackGeneratable { }
-
 public class Barrage : MonoBehaviour
 {
     [Header("以下の攻撃パターンを使います")]
