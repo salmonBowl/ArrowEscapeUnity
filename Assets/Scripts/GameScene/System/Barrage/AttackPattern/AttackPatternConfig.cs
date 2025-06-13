@@ -8,6 +8,14 @@ public enum CoolTimeID // coolTimeにはいくつかのスレッドがありま�
     Slot2, // ArrowBom, EmissionArrow
     Slot3  // SingleArrow
 }
+public enum PatternType
+{
+    PallarelArrow,
+    EmissionArrow,
+    Beam,
+    ArrowBom,
+    SingleArrow,
+}
 
 public class AttackPatternConfig
 {
@@ -15,7 +23,7 @@ public class AttackPatternConfig
     public Func<bool> RandomJudge;
     public CoolTimeID CoolID;
 
-    public int Type; // 0:PallarelArrow, 1:EmissionArrow, 2:Beam, 3:ArrowBom, 4:SingleArrow
+    public PatternType PatternType; // 0:PallarelArrow, 1:EmissionArrow, 2:Beam, 3:ArrowBom, 4:SingleArrow
 
 
     // 特殊なパラメーター

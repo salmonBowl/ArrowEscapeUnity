@@ -6,9 +6,9 @@ public class PatternPallarelArrow : AttackPatternBase
     private readonly ArrowGenerator arrowGenerator;
     private readonly bool center;
 
-    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> executeContition, Func<bool> randomJudge, int waitTimeIndex, bool center)
+    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> executeContition, Func<bool> randomJudge, CoolTimeID coolTimeID, bool center)
     {
-        Init(executeContition, randomJudge, waitTimeIndex);
+        Init(executeContition, randomJudge, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
         this.center = center;
@@ -21,7 +21,7 @@ public class PatternPallarelArrow : AttackPatternBase
     {
         if (executeCondition() == false) return;
 
-        if (waitTimes[waitTimeIndex] != 0) return;
+        if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -36,7 +36,7 @@ public class PatternPallarelArrow : AttackPatternBase
             float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
             arrowGenerator.GeneratePattern01(genPosX, quantity, arrowGap);
 
-            waitTimes[waitTimeIndex] = 1.5f;
+            waitTimes[(int)coolTimeID] = 1.5f;
         }
     }
 }
