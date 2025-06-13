@@ -6,9 +6,9 @@ public class PatternBeam : AttackPatternBase
     readonly BeamGenerator beamGenerator;
     readonly Func<bool> randomJudgeMoreover;
 
-    public PatternBeam(BeamGenerator beamGenerator, Func<bool> executeCondition, Func<bool> randomJudge, CoolTimeID coolTimeID, Func<bool> randomJudgeMoreover)
+    public PatternBeam(BeamGenerator beamGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID, Func<bool> randomJudgeMoreover)
     {
-        Init(executeCondition, randomJudge, coolTimeID);
+        Init(randomJudge, coolTimeID);
 
         this.beamGenerator = beamGenerator;
         this.randomJudgeMoreover = randomJudgeMoreover;
@@ -16,8 +16,6 @@ public class PatternBeam : AttackPatternBase
 
     public override void Execute(List<float> waitTimes)
     {
-        if (executeCondition() == false) return;
-
         if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される

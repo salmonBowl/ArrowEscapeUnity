@@ -5,17 +5,15 @@ public class PatternEmissionArrow : AttackPatternBase
 {
     private readonly ArrowGenerator arrowGenerator;
 
-    public PatternEmissionArrow(ArrowGenerator arrowGenerator, Func<bool> executeContition, Func<bool> randomJudge, CoolTimeID coolTimeID)
+    public PatternEmissionArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID)
     {
-        Init(executeContition, randomJudge, coolTimeID);
+        Init(randomJudge, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
     }
 
     public override void Execute(List<float> waitTimes)
     {
-        if (executeCondition() == false) return;
-
         if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される

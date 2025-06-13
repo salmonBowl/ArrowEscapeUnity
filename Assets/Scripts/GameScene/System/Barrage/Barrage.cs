@@ -14,16 +14,11 @@ using UnityEngine;
 
 public class Barrage : MonoBehaviour
 {
-    [Header("以下の攻撃パターンを使います")]
-    [SerializeField] ArrowGenerator arrowGenerator;
-    [SerializeField] BeamGenerator beamGenerator;
-
-    [Space(20)]
-
     [Header("依存関係")]
 
-    IBossHealthStatus bosshp;
-    [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+    [SerializeField] AttackPatternFactory factory;
+
+    IBossHealthStatus bosshp; [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
 
     [Space(20)]
 
@@ -38,12 +33,12 @@ public class Barrage : MonoBehaviour
 
         patterns = new()
         {
-            new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0, true),
-            new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 0, false),
-            new PatternEmissionArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0),
-            new PatternBeam(beamGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), CoolTimeID.Slot1, () => Fixed_Probability(13)),
-            new PatternArrowBom(arrowGenerator, () => bosshp.HealthPoint < 0.4f, () => Fixed_Probability(140), CoolTimeID.Slot2),
-            new PatternSingleArrow(arrowGenerator, () => bosshp.HealthPoint < 0.2f, () => Fixed_Probability(50), CoolTimeID.Slot3),
+            factory.Create(PatternType.PallarelArrow_Center),
+            factory.Create(PatternType.PallarelArrow_Normal),
+            factory.Create(PatternType.EmissionArrow),
+            factory.Create(PatternType.Beam),
+            factory.Create(PatternType.ArrowBom),
+            factory.Create(PatternType.SingleArrow),
         };
 
         Application.targetFrameRate = 60;
@@ -64,19 +59,29 @@ public class Barrage : MonoBehaviour
         {
             pattern.Execute(waitTimes);
         }
-    }
-
-    /*
-        ランダムに関する関数
-        1/numの確率でtrueを返す
-     */
-    bool Fixed_Probability(int num)
-    {
-        int rand_value = UnityEngine.Random.Range(0, num);
-        if (rand_value == 1)
+        if (bosshp.HealthPoint < 1)
         {
-            return true;
+            // 並んだArrowが降ってくる攻撃
+            patterns[0].Execute(waitTimes);
+            // プレイヤーに向けたArrowの攻撃
+            patterns[2].Execute(waitTimes);
         }
-        return false;
+        if (bosshp.HealthPoint < 0.75f)
+        {
+            // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
+            patterns[1].Execute(waitTimes);
+            // ビームが打たれる攻撃
+            patterns[3].Execute(waitTimes);
+        }
+        if (bosshp.HealthPoint < 0.4f)
+        {
+            // Arrow爆弾が投下される
+            patterns[4].Execute(waitTimes);
+        }
+        if (bosshp.HealthPoint < 0.2f)
+        {
+            // 普通のArrow
+            patterns[5].Execute(waitTimes);
+        }
     }
 }

@@ -6,9 +6,9 @@ public class PatternPallarelArrow : AttackPatternBase
     private readonly ArrowGenerator arrowGenerator;
     private readonly bool center;
 
-    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> executeContition, Func<bool> randomJudge, CoolTimeID coolTimeID, bool center)
+    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID, bool center)
     {
-        Init(executeContition, randomJudge, coolTimeID);
+        Init(randomJudge, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
         this.center = center;
@@ -19,8 +19,6 @@ public class PatternPallarelArrow : AttackPatternBase
      */
     public override void Execute(List<float> waitTimes)
     {
-        if (executeCondition() == false) return;
-
         if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される

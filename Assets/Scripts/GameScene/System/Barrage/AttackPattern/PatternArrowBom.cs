@@ -5,17 +5,15 @@ public class PatternArrowBom : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> executeCondition, Func<bool> randomJudge, CoolTimeID coolTimeID)
+    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID)
     {
-        Init(executeCondition, randomJudge, coolTimeID);
+        Init(randomJudge, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
     }
 
     public override void Execute(List<float> waitTimes)
     {
-        if (executeCondition() == false) return;
-
         if (waitTimes[(int)coolTimeID] != 0) return;
 
         // Update内で確率を引くと実行される
