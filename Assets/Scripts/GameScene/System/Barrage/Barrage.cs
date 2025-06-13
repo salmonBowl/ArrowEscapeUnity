@@ -42,12 +42,14 @@ public class Barrage : MonoBehaviour
             new PatternPallarelArrow(arrowGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 0, false),
             new PatternEmissionArrow(arrowGenerator, () => bosshp.HealthPoint < 1, () => Fixed_Probability(80), 0),
             new PatternBeam(beamGenerator, () => bosshp.HealthPoint < 0.75f, () => Fixed_Probability(80), 1, () => Fixed_Probability(13)),
+            new PatternArrowBom(arrowGenerator, () => bosshp.HealthPoint < 0.4f, () => Fixed_Probability(140), 2),
+            new PatternSingleArrow(arrowGenerator, () => bosshp.HealthPoint < 0.2f, () => Fixed_Probability(50), 3),
         };
 
         Application.targetFrameRate = 60;
 
         // Listの初期化
-        waitTimes = Enumerable.Repeat(0.0f, 3).ToList();
+        waitTimes = Enumerable.Repeat(0.0f, 4).ToList();
 
         UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
     }
@@ -61,17 +63,6 @@ public class Barrage : MonoBehaviour
         foreach (var pattern in patterns)
         {
             pattern.Execute(waitTimes);
-        }
-
-        if (bosshp.HealthPoint < 0.4f)
-        {
-            // Arrow爆弾が投下される
-            ArrowBom();
-        }
-        if (bosshp.HealthPoint < 0.2f)
-        {
-            // 普通のArrow
-            SingleArrow();
         }
     }
 
@@ -87,31 +78,5 @@ public class Barrage : MonoBehaviour
             return true;
         }
         return false;
-    }
-
-    void ArrowBom()
-    {
-        // 1/140の確率でパターン2の生成
-        if (waitTimes[2] == 0)
-        {
-            if (Fixed_Probability(140))
-            {
-                // 生成する範囲の調整
-                float half_genRange = arrowGenerator.stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
-                arrowGenerator.GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
-
-                waitTimes[2] = 5f;
-            }
-        }
-    }
-    void SingleArrow()
-    {
-        // 1/140の確率でパターン2の生成
-        if (Fixed_Probability(50))
-        {
-            // 生成する範囲の調整
-            float half_genRange = arrowGenerator.stageWidth / 2;
-            arrowGenerator.GeneratePattern01(UnityEngine.Random.Range(-half_genRange, half_genRange), 1, 0);
-        }
     }
 }

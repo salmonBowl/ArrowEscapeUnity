@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-public class PatternArrowBom : AttackPatternBase
+public class PatternSingleArrow : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> executeCondition, Func<bool> randomJudge, int waitTimeIndex)
+    public PatternSingleArrow(ArrowGenerator arrowGenerator, Func<bool> executeCondition, Func<bool> randomJudge, int waitTimeIndex)
     {
         Init(executeCondition, randomJudge, waitTimeIndex);
 
@@ -22,10 +22,10 @@ public class PatternArrowBom : AttackPatternBase
         if (randomJudge())
         {
             // 生成する範囲の調整
-            float half_genRange = arrowGenerator.stageWidth / 2 * 0.7f; // ArrowBomは端で生成されないように
-            arrowGenerator.GeneratePattern03(UnityEngine.Random.Range(-half_genRange, half_genRange));
+            float half_genRange = arrowGenerator.stageWidth / 2;
+            arrowGenerator.GeneratePattern01(UnityEngine.Random.Range(-half_genRange, half_genRange), 1, 0);
 
-            waitTimes[waitTimeIndex] = 5f;
+            waitTimes[waitTimeIndex] = 0;
         }
     }
 }

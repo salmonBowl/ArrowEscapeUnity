@@ -45,7 +45,7 @@ public class PatternBeam : AttackPatternBase
                 beamGenerator.GenerateBeam(beamhight2);
             }
 
-            waitTimes[1] = 5f;
+            waitTimes[waitTimeIndex] = 5f;
         }
     }
 }
