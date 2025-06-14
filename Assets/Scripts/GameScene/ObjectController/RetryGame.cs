@@ -9,6 +9,9 @@ public class RetryGame : MonoBehaviour
 
     void Start()
     {
+        EventManager.Instance().OnRetry += Active;
+        EventManager.Instance().OnRetryInTitle += Active;
+
         panelalpha = 0;
     }
 
@@ -16,5 +19,10 @@ public class RetryGame : MonoBehaviour
     {
         panelalpha *= 0.9f;
         panel.color = new Color(1, 0, 0, panelalpha);
+    }
+
+    public void Active()
+    {
+        panelalpha = panelalpha_max;
     }
 }

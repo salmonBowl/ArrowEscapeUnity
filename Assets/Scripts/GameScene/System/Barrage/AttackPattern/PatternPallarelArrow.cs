@@ -23,9 +23,9 @@ public class PatternPallarelArrow : AttackPatternBase
         // Update内で確率を引くと実行される
         if (randomJudge())
         {
-            // 5個のArrowを1.5の間隔で
+            // 5個のArrowを0.9の間隔で
             int quantity = 5;
-            float arrowGap = 3.8f;
+            float arrowGap = 0.9f;
 
             // 生成する範囲の調整
             float halfGenRange = ((center ? 0 : arrowGenerator.stageWidth) - (arrowGap * quantity)) / 2;

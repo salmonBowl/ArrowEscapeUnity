@@ -4,6 +4,7 @@ using UnityEngine;
 public class EventManager : SingletonBase<EventManager>
 {
 
+    public event Action OnRetryInTitle;
     public event Action OnGameplayStart;
     public event Action OnRetry;
     public event Action OnGameClear;
@@ -15,6 +16,12 @@ public class EventManager : SingletonBase<EventManager>
         GamePhase phase = GamePhase.Instance();
         switch (eventName)
         {
+            case "RetryInTitle":
+
+                OnRetryInTitle?.Invoke();
+
+                break;
+
             case "GameplayStart":
 
                 phase.CurrentPhase = GamePhase.Status.Game;

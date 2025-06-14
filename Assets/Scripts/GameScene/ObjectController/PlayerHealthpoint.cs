@@ -17,6 +17,7 @@ public class PlayerHealthpoint : MonoBehaviour
         iBosshp = bosshp.Interface();
 
         EventManager.Instance().OnRetry += OnRetryGame;
+        EventManager.Instance().OnRetryInTitle += OnRetryGame;
     }
 
     void Update()
@@ -76,6 +77,5 @@ public class PlayerHealthpoint : MonoBehaviour
     void OnRetryGame()
     {
         HP = 1;
-        retrypanel.panelalpha = retrypanel.panelalpha_max;
     }
 }

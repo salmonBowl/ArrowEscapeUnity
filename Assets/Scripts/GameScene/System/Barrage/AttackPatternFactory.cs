@@ -26,7 +26,7 @@ public class AttackPatternFactory : MonoBehaviour
             PatternType.EmissionArrow => new PatternEmissionArrow(arrowGenerator, () => Fixed_Probability(80), timeManager),
             PatternType.Beam => new PatternBeam(beamGenerator, () => Fixed_Probability(80), timeManager, () => Fixed_Probability(13)),
             PatternType.ArrowBom => new PatternArrowBom(arrowGenerator, () => Fixed_Probability(140), timeManager),
-            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(50), timeManager),
+            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(40), timeManager),
             _ => throw new ArgumentException("AttackPatternFactoryに定義されていないPatternTypeが渡されました")
         };
     }

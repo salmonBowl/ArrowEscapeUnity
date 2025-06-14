@@ -26,6 +26,7 @@ public class Barrage : MonoBehaviour
 
     void Start()
     {
+        UpdateManager.Instance.OnUpdateWhileTitle += UpdateWhileTitle;
         UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
 
         bosshp = iBossHealthStatus.Interface();
@@ -44,17 +45,25 @@ public class Barrage : MonoBehaviour
     {
         coolTimeManager.Tick(Time.deltaTime);
 
+        bool lastPhase = bosshp.HealthPoint < 0.2f;
+
         if (bosshp.HealthPoint < 1)
         {
-            // 並んだArrowが降ってくる攻撃
-            pallarelArrow1.Execute();
+            if (!lastPhase)
+            {
+                // 並んだArrowが降ってくる攻撃
+                pallarelArrow1.Execute();
+            }
             // プレイヤーに向けたArrowの攻撃
             emissionArrow.Execute();
         }
         if (bosshp.HealthPoint < 0.75f)
         {
-            // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
-            pallarelArrow2.Execute();
+            if (!lastPhase)
+            {
+                // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
+                pallarelArrow2.Execute();
+            }
             // ビームが打たれる攻撃
             beam.Execute();
         }
@@ -63,10 +72,17 @@ public class Barrage : MonoBehaviour
             // Arrow爆弾が投下される
             arrowBom.Execute();
         }
-        if (bosshp.HealthPoint < 0.2f)
+        if (bosshp.HealthPoint < 0.2f) // lastPhase
         {
+            pallarelArrow1.Execute();
+            pallarelArrow1.Execute();
+            pallarelArrow1.Execute();
             // 普通のArrow
             singleArrow.Execute();
         }
+    }
+    void UpdateWhileTitle()
+    {
+
     }
 }

@@ -1,10 +1,10 @@
 using System;
 
-public class PatternSingleArrow : AttackPatternBase
+public class PatternTutorialArrow : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternSingleArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager)
+    public PatternTutorialArrow(ArrowGenerator arrowGenerator)
     {
         Init(randomJudge, timeManager);
 
