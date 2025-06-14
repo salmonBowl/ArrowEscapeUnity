@@ -38,8 +38,6 @@ public class Barrage : MonoBehaviour
         beam = factory.Create(PatternType.Beam, coolTimeManager);
         arrowBom = factory.Create(PatternType.ArrowBom, coolTimeManager);
         singleArrow = factory.Create(PatternType.SingleArrow, coolTimeManager);
-
-        Application.targetFrameRate = 60;
     }
 
     void UpdateWhileGame()
