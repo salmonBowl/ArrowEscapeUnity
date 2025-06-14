@@ -14,9 +14,9 @@ public class PatternBeam : AttackPatternBase
         this.randomJudgeMoreover = randomJudgeMoreover;
     }
 
-    public override void Execute(List<float> waitTimes)
+    public override void Execute()
     {
-        if (waitTimes[1] != 0) return;
+        if (!timeManager.IsReady(CoolTimeID.Slot1)) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -43,7 +43,7 @@ public class PatternBeam : AttackPatternBase
                 beamGenerator.GenerateBeam(beamhight2);
             }
 
-            waitTimes[1] = 5f;
+            timeManager.Reset(CoolTimeID.Slot1, 5f);
         }
     }
 }

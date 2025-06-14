@@ -20,61 +20,55 @@ public class Barrage : MonoBehaviour
 
     IBossHealthStatus bosshp; [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
 
-    // 時間経過で減っていく変数。複数個必要になりそうなので配列、Linqで操作するのでリストに
-    List<float> waitTimes;
+    CoolTimeManager coolTimeManager;
 
     AttackPatternBase pallarelArrow1, pallarelArrow2, emissionArrow, beam, arrowBom, singleArrow;
 
     void Start()
     {
+        UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
+
         bosshp = iBossHealthStatus.Interface();
 
-        CoolTimeManager timeManager = new();
+        coolTimeManager = new();
 
-        pallarelArrow1 = factory.Create(PatternType.PallarelArrow_Center, timeManager);
-        pallarelArrow2 = factory.Create(PatternType.PallarelArrow_Normal, timeManager);
-        emissionArrow = factory.Create(PatternType.EmissionArrow, timeManager);
-        beam = factory.Create(PatternType.Beam, timeManager);
-        arrowBom = factory.Create(PatternType.ArrowBom, timeManager);
-        singleArrow = factory.Create(PatternType.SingleArrow, timeManager);
+        pallarelArrow1 = factory.Create(PatternType.PallarelArrow_Center, coolTimeManager);
+        pallarelArrow2 = factory.Create(PatternType.PallarelArrow_Normal, coolTimeManager);
+        emissionArrow = factory.Create(PatternType.EmissionArrow, coolTimeManager);
+        beam = factory.Create(PatternType.Beam, coolTimeManager);
+        arrowBom = factory.Create(PatternType.ArrowBom, coolTimeManager);
+        singleArrow = factory.Create(PatternType.SingleArrow, coolTimeManager);
 
         Application.targetFrameRate = 60;
-
-        // Listの初期化
-        waitTimes = Enumerable.Repeat(0.0f, 4).ToList();
-
-        UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
     }
 
     void UpdateWhileGame()
     {
-        // waitTimes[]をカウントダウン
-        waitTimes = waitTimes.Select(x => Mathf.Max(0, x - Time.deltaTime))
-                           .ToList();
+        coolTimeManager.Tick(Time.deltaTime);
 
         if (bosshp.HealthPoint < 1)
         {
             // 並んだArrowが降ってくる攻撃
-            pallarelArrow1.Execute(waitTimes);
+            pallarelArrow1.Execute();
             // プレイヤーに向けたArrowの攻撃
-            emissionArrow.Execute(waitTimes);
+            emissionArrow.Execute();
         }
         if (bosshp.HealthPoint < 0.75f)
         {
             // 並んだArrowが降ってくる攻撃2つ目 (全体の密度を上げるため)
-            pallarelArrow2.Execute(waitTimes);
+            pallarelArrow2.Execute();
             // ビームが打たれる攻撃
-            beam.Execute(waitTimes);
+            beam.Execute();
         }
         if (bosshp.HealthPoint < 0.4f)
         {
             // Arrow爆弾が投下される
-            arrowBom.Execute(waitTimes);
+            arrowBom.Execute();
         }
         if (bosshp.HealthPoint < 0.2f)
         {
             // 普通のArrow
-            singleArrow.Execute(waitTimes);
+            singleArrow.Execute();
         }
     }
 }

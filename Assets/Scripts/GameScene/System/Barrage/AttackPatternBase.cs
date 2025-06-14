@@ -13,5 +13,5 @@ public abstract class AttackPatternBase
         this.timeManager = timeManager;
         this.coolTimeID = coolTimeID;
     }
-    public abstract void Execute(List<float> waitTimes);
+    public abstract void Execute();
 }

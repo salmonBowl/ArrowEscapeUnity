@@ -17,9 +17,9 @@ public class PatternPallarelArrow : AttackPatternBase
     /*
         1/80の確率でパターン1の生成、また1.5秒のクールタイムがある
      */
-    public override void Execute(List<float> waitTimes)
+    public override void Execute()
     {
-        if (waitTimes[0] != 0) return;
+        if (!timeManager.IsReady(CoolTimeID.Slot0)) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -34,7 +34,7 @@ public class PatternPallarelArrow : AttackPatternBase
             float genPosX = UnityEngine.Random.Range(-halfGenRange, halfGenRange);
             arrowGenerator.GeneratePattern01(genPosX, quantity, arrowGap);
 
-            waitTimes[0] = 1.5f;
+            timeManager.Reset(CoolTimeID.Slot0, 1.5f);
         }
     }
 }

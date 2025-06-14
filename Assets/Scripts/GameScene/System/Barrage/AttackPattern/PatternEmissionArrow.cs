@@ -12,9 +12,9 @@ public class PatternEmissionArrow : AttackPatternBase
         this.arrowGenerator = arrowGenerator;
     }
 
-    public override void Execute(List<float> waitTimes)
+    public override void Execute()
     {
-        if (waitTimes[(int)coolTimeID] != 0) return;
+        if (!timeManager.IsReady(CoolTimeID.Slot0)) return;
 
         // Update内で確率を引くと実行される
         if (randomJudge())
@@ -28,8 +28,8 @@ public class PatternEmissionArrow : AttackPatternBase
             float half_genRange = arrowGenerator.stageWidth / 2;
             arrowGenerator.GeneratePattern02(UnityEngine.Random.Range(-half_genRange, half_genRange), quantity, anglerange);
 
-            waitTimes[0] = 1.5f;
-            waitTimes[1] = 1.5f;
+            timeManager.Reset(CoolTimeID.Slot0, 1.5f);
+            timeManager.Reset(CoolTimeID.Slot1, 1.5f);
         }
     }
 }
