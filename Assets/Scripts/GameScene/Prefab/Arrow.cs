@@ -1,16 +1,16 @@
 /*
     ArrowController.cs
-        ŠeArrow‚Ì‹““®‚ğˆ—‚µ‚Ü‚·
+        å„Arrowã®æŒ™å‹•ã‚’å‡¦ç†ã—ã¾ã™
         
-        ˆ—
-        Eã•”‚Å­‚µ‘Ò‹@
-        E’¼i‚·‚é
-        Eg‚¢I‚í‚Á‚½‚çíœ
+        å‡¦ç†
+        ãƒ»ä¸Šéƒ¨ã§å°‘ã—å¾…æ©Ÿ
+        ãƒ»ç›´é€²ã™ã‚‹
+        ãƒ»ä½¿ã„çµ‚ã‚ã£ãŸã‚‰å‰Šé™¤
  */
 
 using UnityEngine;
 
-public class ArrowController : MonoBehaviour
+public class Arrow : MonoBehaviour
 {
     public float fall_speed;
     public float wait_time;
@@ -30,7 +30,7 @@ public class ArrowController : MonoBehaviour
     }
     void Update()
     {
-        // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÌŒo‰ßŠÔ
+        // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çµŒéæ™‚é–“
         elapsed_time += Time.deltaTime;
 
         if (wait_time < elapsed_time)
@@ -41,27 +41,27 @@ public class ArrowController : MonoBehaviour
         {
             float movetime = wait_time - stoptime_lastwait;
             transform.position = startpos + (3f * Mathf.Min(movetime, elapsed_time) / movetime * velocity);
-                //‰ŠúˆÊ’u‚©‚ç­‚µ‚¾‚¯i‚ñ‚¾ˆÊ’u‚Ü‚Å‚ä‚Á‚­‚èˆÚ“®¨­‚µ’â~‚µ‚½Œã‚É¨Arrow‚ğ”­Ë
+                //åˆæœŸä½ç½®ã‹ã‚‰å°‘ã—ã ã‘é€²ã‚“ã ä½ç½®ã¾ã§ã‚†ã£ãã‚Šç§»å‹•â†’å°‘ã—åœæ­¢ã—ãŸå¾Œã«â†’Arrowã‚’ç™ºå°„
         }
 
     }
 
-    // —‰º‚ªn‚Ü‚Á‚Ä‚©‚ç‚ÌUpdateˆ—
+    // è½ä¸‹ãŒå§‹ã¾ã£ã¦ã‹ã‚‰ã®Updateå‡¦ç†
     void AfterWaitUpdate()
     {
-        // XV‘O‚ÌÀ•W
+        // æ›´æ–°å‰ã®åº§æ¨™
         Vector2 myPosition = transform.position;
 
-        // —‰ºˆ—
+        // è½ä¸‹å‡¦ç†
         transform.position = myPosition + velocity;
 
-        // ‰º‚ÉƒXƒNƒŠ[ƒ“ƒAƒEƒg‚Å
+        // ä¸‹ã«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ã‚¦ãƒˆã§
         float offScreen_y = -10;
         if (transform.position.y < offScreen_y)
         {
             Destroy(gameObject);
         }
-        // ‰“‚­‚É‚¢‚Á‚½‚ç
+        // é ãã«ã„ã£ãŸã‚‰
         float far = 20;
         if (far < Vector2.Distance(Vector2.zero, transform.position))
         {

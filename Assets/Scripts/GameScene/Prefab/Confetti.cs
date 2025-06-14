@@ -1,14 +1,14 @@
 /*
     Confetti_prefab.cs
-        ƒQ[ƒ€ƒNƒŠƒAŒã‚É†á‚ğo‚µ‚Ü‚·
+        ã‚²ãƒ¼ãƒ ã‚¯ãƒªã‚¢å¾Œã«ç´™å¹é›ªã‚’å‡ºã—ã¾ã™
 
-        ˆ—
-        E—‚¿‚é
-        Eg‚¢I‚í‚Á‚½‚çíœ
+        å‡¦ç†
+        ãƒ»è½ã¡ã‚‹
+        ãƒ»ä½¿ã„çµ‚ã‚ã£ãŸã‚‰å‰Šé™¤
  */
 using UnityEngine;
 
-public class ConfettiController : MonoBehaviour
+public class Confetti : MonoBehaviour
 {
     [SerializeField] SpriteRenderer my;
     [SerializeField] Color[] colors;
@@ -19,11 +19,11 @@ public class ConfettiController : MonoBehaviour
     {
         transform.Rotate(0, 0, Random.Range(0.0f, 180.0f));
 
-        // ‰ñ“]‘¬“x‚ğƒ‰ƒ“ƒ_ƒ€‚É‚·‚é
+        // å›è»¢é€Ÿåº¦ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«ã™ã‚‹
         rotate_speed += Random.Range(-0.7f, 0.7f);
         rotate_speed *= Random.Range(0, 2) == 0 ? 1 : -1;
 
-        //F‚ğŒˆ’è
+        //è‰²ã‚’æ±ºå®š
         my.color = colors[Random.Range(0, colors.Length)];
     }
 
@@ -32,7 +32,7 @@ public class ConfettiController : MonoBehaviour
         transform.position += Vector3.down * fall_speed;
         transform.Rotate(0, 0, rotate_speed);
 
-        // ‰º‚ÉƒXƒNƒŠ[ƒ“ƒAƒEƒg‚Åíœ
+        // ä¸‹ã«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ã‚¦ãƒˆã§å‰Šé™¤
         float offScreen_y = -10;
         if (transform.position.y < offScreen_y)
         {

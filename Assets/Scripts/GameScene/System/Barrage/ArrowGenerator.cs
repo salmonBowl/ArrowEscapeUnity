@@ -77,11 +77,29 @@ public class ArrowGenerator : MonoBehaviour
 
             float arrow_speed = 0.25f;
             Vector2 arrow_velocity = look * Vector3.down * arrow_speed;
-            arrow.GetComponent<ArrowController>().velocity = arrow_velocity;
+            arrow.GetComponent<Arrow>().velocity = arrow_velocity;
         }
     }
     public void GeneratePattern03(float generate_x)
     {
         GenerateArrowBom(generate_x);
+    }
+    public void GeneratePattern04(float generate_y)
+    {
+        // 右向きのArrow
+
+        Vector3 myPos = new(stageWidth / 2, generate_y);
+
+        var radRight = Mathf.PI / 2;
+        var look = Quaternion.Euler(0, 0, radRight);
+
+        // arrow生成
+        GameObject arrow = Instantiate(Arrow, myPos, look);
+
+        // arrowのvelocityを計算
+
+        float arrow_speed = 0.25f;
+        Vector2 arrow_velocity = look * Vector3.down * arrow_speed;
+        arrow.GetComponent<Arrow>().velocity = arrow_velocity;
     }
 }

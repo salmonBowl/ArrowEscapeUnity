@@ -72,7 +72,7 @@ public class StageClear : MonoBehaviour
 
             if (phase.IsPerfectClear)
             {
-                confetti.GetComponent<ArrowController>().wait_time = 0;
+                confetti.GetComponent<Arrow>().wait_time = 0;
             }
         }
     }

@@ -7,7 +7,7 @@ public class BeamGenerator : MonoBehaviour
 
     public void GenerateBeam(float hight)
     {
-        BeamController beam = Instantiate(Beam).GetComponent<BeamController>();
+        Beam beam = Instantiate(Beam).GetComponent<Beam>();
         beam.beam_hight = hight;
         beam.graceTime = graceTime;
     }

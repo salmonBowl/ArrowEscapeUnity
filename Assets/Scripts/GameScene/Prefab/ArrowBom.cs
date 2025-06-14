@@ -1,21 +1,21 @@
 /*
     ArrowBom.cs
-        UŒ‚‚Ì1‚Â‚Æ‚µ‚Ä‚ ‚éArrowBom‚Ì‹““®‚ğŒvZ‚µ‚Ü‚·
+        æ”»æ’ƒã®1ã¤ã¨ã—ã¦ã‚ã‚‹ArrowBomã®æŒ™å‹•ã‚’è¨ˆç®—ã—ã¾ã™
         
-        ˆ—
-        Eã•”‚Å­‚µ‘Ò‹@
-        E‰ñ“]‚µ‚È‚ª‚ç—‚¿‚é
-        E”š”­‚µ‚ÄArrow‚ğ”­Ë
+        å‡¦ç†
+        ãƒ»ä¸Šéƒ¨ã§å°‘ã—å¾…æ©Ÿ
+        ãƒ»å›è»¢ã—ãªãŒã‚‰è½ã¡ã‚‹
+        ãƒ»çˆ†ç™ºã—ã¦Arrowã‚’ç™ºå°„
  */
 
 using UnityEngine;
 /// <summary>
-/// UŒ‚‚Ì1‚Â‚Æ‚µ‚Ä‚ ‚éArrowBom‚Ì‹““®‚ğŒvZ‚µ‚Ü‚·
+/// æ”»æ’ƒã®1ã¤ã¨ã—ã¦ã‚ã‚‹ArrowBomã®æŒ™å‹•ã‚’è¨ˆç®—ã—ã¾ã™
 /// </summary>
 public class ArrowBom : MonoBehaviour
 {
     /// <summary>
-    /// d—Í
+    /// é‡åŠ›
     /// </summary>
     [SerializeField] float gravity;
 
@@ -35,39 +35,39 @@ public class ArrowBom : MonoBehaviour
         gravity *= -1;
         startpos = transform.position;
 
-        // ‰ñ“]‚Ì‹““®‚ğ©‘R‚Èƒ‰ƒ“ƒ_ƒ€‚É
+        // å›è»¢ã®æŒ™å‹•ã‚’è‡ªç„¶ãªãƒ©ãƒ³ãƒ€ãƒ ã«
         rotate_speed += Random.Range(-0.1f, 0.1f);
         rotate_speed *= Random.Range(0, 2) == 0 ? 1 : -1;
     }
     void Update()
     {
-        // ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÌŒo‰ßŠÔ
+        // ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çµŒéæ™‚é–“
         elapsed_time += Time.deltaTime;
 
-        if (wait_time < elapsed_time) // ‘Ò‹@Œã—‰º
+        if (wait_time < elapsed_time) // å¾…æ©Ÿå¾Œè½ä¸‹
         {
             AfterWaitUpdate();
         }
-        else // ‘Ò‹@’†
+        else // å¾…æ©Ÿä¸­
         {
             float movetime = wait_time - stoptime_lastwait;
             transform.position = startpos + (3f * Mathf.Min(movetime, elapsed_time) / movetime * Vector2.down * 0.25f);
-            //‰ŠúˆÊ’u‚©‚ç­‚µ‚¾‚¯i‚ñ‚¾ˆÊ’u‚Ü‚Å‚ä‚Á‚­‚èˆÚ“®¨­‚µ’â~‚µ‚½Œã‚É¨Arrow‚ğ”­Ë
+            //åˆæœŸä½ç½®ã‹ã‚‰å°‘ã—ã ã‘é€²ã‚“ã ä½ç½®ã¾ã§ã‚†ã£ãã‚Šç§»å‹•â†’å°‘ã—åœæ­¢ã—ãŸå¾Œã«â†’Arrowã‚’ç™ºå°„
         }
 
     }
 
-    // —‰º‚ªn‚Ü‚Á‚Ä‚©‚ç‚ÌUpdateˆ—
+    // è½ä¸‹ãŒå§‹ã¾ã£ã¦ã‹ã‚‰ã®Updateå‡¦ç†
     void AfterWaitUpdate()
     {
-        // d—Í‚Å—‰º
+        // é‡åŠ›ã§è½ä¸‹
         velocity += Vector2.up * gravity;
         transform.position += (Vector3)velocity;
 
-        // ‰ñ“]‚µ‚È‚ª‚ç—‰º‚·‚é‹““®
+        // å›è»¢ã—ãªãŒã‚‰è½ä¸‹ã™ã‚‹æŒ™å‹•
         transform.Rotate(0, 0, rotate_speed);
 
-        // ŠÔ‚ªŒo‚Â‚Æ”š”­
+        // æ™‚é–“ãŒçµŒã¤ã¨çˆ†ç™º
         if (explosion_time < elapsed_time)
         {
             Explosion();
@@ -79,13 +79,13 @@ public class ArrowBom : MonoBehaviour
         int arrowCount = 8;
         for (int i = 0; i < arrowCount; i++)
         {
-            // arrow‚ğ‚»‚ê‚¼‚ê‚ÌŒü‚«‚ÆˆÊ’u‚Å¶¬
+            // arrowã‚’ãã‚Œãã‚Œã®å‘ãã¨ä½ç½®ã§ç”Ÿæˆ
             float angle = (2 * Mathf.PI / arrowCount * i) + transform.eulerAngles.z;
             Vector2 direction = new(Mathf.Sin(angle), Mathf.Cos(angle));
 
-            ArrowController arrow =
+            Arrow arrow =
                 Instantiate(Arrow, transform.position + ((Vector3)direction * 1.0f), Quaternion.Euler(0, 0, 180 - (angle * Mathf.Rad2Deg)))
-                .GetComponent<ArrowController>();
+                .GetComponent<Arrow>();
             arrow.wait_time = 0;
             arrow.velocity = direction * 0.25f;
         }

@@ -12,7 +12,7 @@
 
 using UnityEngine;
 
-public class BeamController : MonoBehaviour
+public class Beam : MonoBehaviour
 {
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] ParticleSystem particle;
