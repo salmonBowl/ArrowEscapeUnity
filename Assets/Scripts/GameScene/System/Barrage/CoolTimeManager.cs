@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum CoolTimeID // coolTimeにはいくつかのスレッドがあります
+{
+    Slot0, // PallarelArrow, EmissionArrow
+    Slot1, // Beam
+    Slot2, // ArrowBom, EmissionArrow
+    Slot3  // SingleArrow
+}
+
 public class CoolTimeManager
 {
     readonly Dictionary<CoolTimeID, float> coolTimes = new();

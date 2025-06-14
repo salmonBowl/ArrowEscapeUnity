@@ -1,12 +1,5 @@
 using System;
 
-public enum CoolTimeID // coolTimeにはいくつかのスレッドがあります
-{
-    Slot0, // PallarelArrow, EmissionArrow
-    Slot1, // Beam
-    Slot2, // ArrowBom, EmissionArrow
-    Slot3  // SingleArrow
-}
 public enum PatternType
 {
     PallarelArrow_Center,
