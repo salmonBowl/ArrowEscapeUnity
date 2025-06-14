@@ -5,9 +5,9 @@ public class PatternSingleArrow : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternSingleArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID)
+    public PatternSingleArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, CoolTimeID coolTimeID)
     {
-        Init(randomJudge, coolTimeID);
+        Init(randomJudge, timeManager, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
     }

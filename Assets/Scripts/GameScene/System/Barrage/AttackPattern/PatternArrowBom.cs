@@ -5,9 +5,9 @@ public class PatternArrowBom : AttackPatternBase
 {
     readonly ArrowGenerator arrowGenerator;
 
-    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeID coolTimeID)
+    public PatternArrowBom(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, CoolTimeID coolTimeID)
     {
-        Init(randomJudge, coolTimeID);
+        Init(randomJudge, timeManager, coolTimeID);
 
         this.arrowGenerator = arrowGenerator;
     }

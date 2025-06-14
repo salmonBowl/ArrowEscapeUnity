@@ -8,16 +8,16 @@ public class AttackPatternFactory : MonoBehaviour
     [SerializeField] BeamGenerator beamGenerator;
 
 
-    public AttackPatternBase Create(PatternType patternType)
+    public AttackPatternBase Create(PatternType patternType, CoolTimeManager timeManager)
     {
         return patternType switch
         {
-            PatternType.PallarelArrow_Center => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), CoolTimeID.Slot0, true),
-            PatternType.PallarelArrow_Normal => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), CoolTimeID.Slot0, false),
-            PatternType.EmissionArrow => new PatternEmissionArrow(arrowGenerator, () => Fixed_Probability(80), CoolTimeID.Slot0),
-            PatternType.Beam => new PatternBeam(beamGenerator, () => Fixed_Probability(80), CoolTimeID.Slot1, () => Fixed_Probability(13)),
-            PatternType.ArrowBom => new PatternArrowBom(arrowGenerator, () => Fixed_Probability(140), CoolTimeID.Slot2),
-            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(50), CoolTimeID.Slot3),
+            PatternType.PallarelArrow_Center => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0, true),
+            PatternType.PallarelArrow_Normal => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0, false),
+            PatternType.EmissionArrow => new PatternEmissionArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0),
+            PatternType.Beam => new PatternBeam(beamGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot1, () => Fixed_Probability(13)),
+            PatternType.ArrowBom => new PatternArrowBom(arrowGenerator, () => Fixed_Probability(140), timeManager, CoolTimeID.Slot2),
+            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(50), timeManager, CoolTimeID.Slot3),
             _ => throw new ArgumentException("AttackPatternFactoryに定義されていないPatternTypeが渡されました")
         };
     }

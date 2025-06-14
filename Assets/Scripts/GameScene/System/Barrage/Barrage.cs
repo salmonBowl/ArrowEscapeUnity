@@ -29,12 +29,14 @@ public class Barrage : MonoBehaviour
     {
         bosshp = iBossHealthStatus.Interface();
 
-        pallarelArrow1 = factory.Create(PatternType.PallarelArrow_Center);
-        pallarelArrow2 = factory.Create(PatternType.PallarelArrow_Normal);
-        emissionArrow = factory.Create(PatternType.EmissionArrow);
-        beam = factory.Create(PatternType.Beam);
-        arrowBom = factory.Create(PatternType.ArrowBom);
-        singleArrow = factory.Create(PatternType.SingleArrow);
+        CoolTimeManager timeManager = new();
+
+        pallarelArrow1 = factory.Create(PatternType.PallarelArrow_Center, timeManager);
+        pallarelArrow2 = factory.Create(PatternType.PallarelArrow_Normal, timeManager);
+        emissionArrow = factory.Create(PatternType.EmissionArrow, timeManager);
+        beam = factory.Create(PatternType.Beam, timeManager);
+        arrowBom = factory.Create(PatternType.ArrowBom, timeManager);
+        singleArrow = factory.Create(PatternType.SingleArrow, timeManager);
 
         Application.targetFrameRate = 60;
 
