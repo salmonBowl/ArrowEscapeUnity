@@ -1,6 +1,15 @@
 using System;
 using UnityEngine;
 
+public enum PatternType
+{
+    PallarelArrow_Center,
+    PallarelArrow_Normal,
+    EmissionArrow,
+    Beam,
+    ArrowBom,
+    SingleArrow,
+}
 public class AttackPatternFactory : MonoBehaviour
 {
     [Header("以下の攻撃パターンを使います")]
@@ -12,12 +21,12 @@ public class AttackPatternFactory : MonoBehaviour
     {
         return patternType switch
         {
-            PatternType.PallarelArrow_Center => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0, true),
-            PatternType.PallarelArrow_Normal => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0, false),
-            PatternType.EmissionArrow => new PatternEmissionArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot0),
-            PatternType.Beam => new PatternBeam(beamGenerator, () => Fixed_Probability(80), timeManager, CoolTimeID.Slot1, () => Fixed_Probability(13)),
-            PatternType.ArrowBom => new PatternArrowBom(arrowGenerator, () => Fixed_Probability(140), timeManager, CoolTimeID.Slot2),
-            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(50), timeManager, CoolTimeID.Slot3),
+            PatternType.PallarelArrow_Center => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, true),
+            PatternType.PallarelArrow_Normal => new PatternPallarelArrow(arrowGenerator, () => Fixed_Probability(80), timeManager, false),
+            PatternType.EmissionArrow => new PatternEmissionArrow(arrowGenerator, () => Fixed_Probability(80), timeManager),
+            PatternType.Beam => new PatternBeam(beamGenerator, () => Fixed_Probability(80), timeManager, () => Fixed_Probability(13)),
+            PatternType.ArrowBom => new PatternArrowBom(arrowGenerator, () => Fixed_Probability(140), timeManager),
+            PatternType.SingleArrow => new PatternSingleArrow(arrowGenerator, () => Fixed_Probability(50), timeManager),
             _ => throw new ArgumentException("AttackPatternFactoryに定義されていないPatternTypeが渡されました")
         };
     }

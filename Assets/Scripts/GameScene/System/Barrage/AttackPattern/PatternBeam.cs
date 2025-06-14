@@ -6,9 +6,9 @@ public class PatternBeam : AttackPatternBase
     readonly BeamGenerator beamGenerator;
     readonly Func<bool> randomJudgeMoreover;
 
-    public PatternBeam(BeamGenerator beamGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, CoolTimeID coolTimeID, Func<bool> randomJudgeMoreover)
+    public PatternBeam(BeamGenerator beamGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, Func<bool> randomJudgeMoreover)
     {
-        Init(randomJudge, timeManager, coolTimeID);
+        Init(randomJudge, timeManager);
 
         this.beamGenerator = beamGenerator;
         this.randomJudgeMoreover = randomJudgeMoreover;

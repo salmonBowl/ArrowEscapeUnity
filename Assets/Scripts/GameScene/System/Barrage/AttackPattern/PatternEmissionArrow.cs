@@ -4,9 +4,9 @@ public class PatternEmissionArrow : AttackPatternBase
 {
     private readonly ArrowGenerator arrowGenerator;
 
-    public PatternEmissionArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, CoolTimeID coolTimeID)
+    public PatternEmissionArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager)
     {
-        Init(randomJudge, timeManager, coolTimeID);
+        Init(randomJudge, timeManager);
 
         this.arrowGenerator = arrowGenerator;
     }

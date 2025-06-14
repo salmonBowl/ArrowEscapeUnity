@@ -5,9 +5,9 @@ public class PatternPallarelArrow : AttackPatternBase
     private readonly ArrowGenerator arrowGenerator;
     private readonly bool center;
 
-    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, CoolTimeID coolTimeID, bool center)
+    public PatternPallarelArrow(ArrowGenerator arrowGenerator, Func<bool> randomJudge, CoolTimeManager timeManager, bool center)
     {
-        Init(randomJudge, timeManager, coolTimeID);
+        Init(randomJudge, timeManager);
 
         this.arrowGenerator = arrowGenerator;
         this.center = center;
