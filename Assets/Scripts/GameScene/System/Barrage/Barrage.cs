@@ -8,8 +8,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Barrage : MonoBehaviour
@@ -18,7 +16,7 @@ public class Barrage : MonoBehaviour
 
     [SerializeField] AttackPatternFactory factory;
 
-    IBossHealthStatus bosshp; [SerializeField] SerializeIBossHealthStatus iBossHealthStatus; [Serializable] public class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+    BossHealthPoint bosshp;
 
     CoolTimeManager coolTimeManager;
 
@@ -28,8 +26,6 @@ public class Barrage : MonoBehaviour
     {
         UpdateManager.Instance.OnUpdateWhileTitle += UpdateWhileTitle;
         UpdateManager.Instance.OnUpdateWhileGame += UpdateWhileGame;
-
-        bosshp = iBossHealthStatus.Interface();
 
         coolTimeManager = new();
 
