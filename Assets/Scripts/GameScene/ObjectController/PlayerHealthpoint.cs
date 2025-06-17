@@ -6,16 +6,17 @@ using UnityEngine.UI;
 public class PlayerHealthpoint : MonoBehaviour
 {
     [HideInInspector] public float HP = 1.0f;
-    IBossHealthStatus iBosshp; [SerializeField] SerializeIBossHealthStatus bosshp; [Serializable] class SerializeIBossHealthStatus : SerializeInterface<IBossHealthStatus> { }
+
+    [SerializeField] BossHealthPoint bosshp;
     [SerializeField] RetryGame retrypanel;
+
     [Space(20)]
+
     [SerializeField] Slider hpGauge;
     [SerializeField] float[] damage_value;
 
     void Start()
     {
-        iBosshp = bosshp.Interface();
-
         EventManager.Instance().OnRetry += OnRetryGame;
         EventManager.Instance().OnRetryInTitle += OnRetryGame;
     }
@@ -28,7 +29,7 @@ public class PlayerHealthpoint : MonoBehaviour
         hpGauge.value = (hpGauge.value * gaugeSmoothness) + (HP * (1 - gaugeSmoothness));
 
         // リトライ時にダメージを受けないように
-        if (iBosshp.HealthPoint == 1)
+        if (bosshp.HealthPoint == 1)
         {
             HP = 1;
         }
