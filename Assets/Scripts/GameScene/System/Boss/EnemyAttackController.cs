@@ -7,16 +7,15 @@
             ・
  */
 
-using System;
 using UnityEngine;
 
-public class Barrage : MonoBehaviour
+public class EnemyAttackController : MonoBehaviour
 {
     [Header("依存関係")]
 
     [SerializeField] AttackPatternFactory factory;
 
-    BossHealthPoint bosshp;
+    [SerializeField] BossHealthPoint bosshp;
 
     CoolTimeManager coolTimeManager;
 

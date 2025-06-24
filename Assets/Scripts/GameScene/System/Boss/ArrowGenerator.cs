@@ -13,9 +13,9 @@ public class ArrowGenerator : MonoBehaviour
     [SerializeField] 
     protected Background background;
     [Space(20)]
-    [SerializeField] GameObject Arrow;
-    [SerializeField] GameObject ArrowBom;
-    [SerializeField] GameObject Player;
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrowBom;
+    [SerializeField] GameObject player;
     [SerializeField] float generateHeight;
 
     [HideInInspector] public float stageWidth;
@@ -29,12 +29,12 @@ public class ArrowGenerator : MonoBehaviour
     GameObject GenerateArrow(float generate_x, Quaternion angle)
     {
         Vector2 generatePos = new(generate_x, generateHeight);
-        return Instantiate(Arrow, generatePos, angle);
+        return Instantiate(arrow, generatePos, angle);
     }
     GameObject GenerateArrowBom(float generate_x)
     {
         Vector2 generatePos = new(generate_x, generateHeight);
-        return Instantiate(ArrowBom, generatePos, Quaternion.identity);
+        return Instantiate(arrowBom, generatePos, Quaternion.identity);
     }
 
 
@@ -62,7 +62,7 @@ public class ArrowGenerator : MonoBehaviour
             // Arrowの向きを計算
 
             Vector3 myPos = new(generate_x, generateHeight);
-            var vec_MyToTarget = Player.transform.position - myPos;
+            var vec_MyToTarget = player.transform.position - myPos;
             /*var look = Quaternion.Euler(0, 0, 0 + Mathf.Rad2Deg * Random.Range(-angle_range / 2, angle_range / 2))
                      * Quaternion.Euler(-90, 0, 0)
                 * Quaternion.LookRotation(vec_MyToTarget, Vector3.up);
@@ -94,12 +94,12 @@ public class ArrowGenerator : MonoBehaviour
         var look = Quaternion.Euler(0, 0, radRight);
 
         // arrow生成
-        GameObject arrow = Instantiate(Arrow, myPos, look);
+        GameObject arrowInstance = Instantiate(arrow, myPos, look);
 
         // arrowのvelocityを計算
 
         float arrow_speed = 0.25f;
         Vector2 arrow_velocity = look * Vector3.down * arrow_speed;
-        arrow.GetComponent<Arrow>().velocity = arrow_velocity;
+        arrowInstance.GetComponent<Arrow>().velocity = arrow_velocity;
     }
 }
